@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
+<body>
+<div layout:fragment="content">
+    <main>
+        <div>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+                <li class="breadcrumb-item active"><a href="/address">Adresy</a></li>
+                <li class="breadcrumb-item active">Nowy Adres</li>
+            </ol>
+            <form class="px-4" action="#" th:action="@{/saveAddress}" th:object="${newAddress}" method="post">
+
+                <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+<!--                    <label for="idCity" class="form-label">Miasto</label>-->
+                        <select class="form-select" id="idCity" th:field="*{city.idCity}" required>
+                            <option value=""></option>
+                            <option th:each="city : ${cityList}" th:value="${city.idCity}"
+                                    th:text="${city.cityName}"/>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+<!--                        <label for="addressStreet" class="form-label">Nazwa ulicy</label>-->
+                        <input type="text" class="form-control"  id="addressStreet" name="addressStreet"
+                               th:field="*{addressStreet}" placeholder="Wprowadź nazwe ulicy" required>
+                    </div>
+                </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+    <script>
+    $(document).ready(function () {
+    $('#city_zip_code').mask('00-000');
+    });
+
+    $(document).ready(function () {
+    $('#idCity').select2({
+    placeholder: "Wybierz miasto",
+    allowClear: true
+    });
+    });
+    </script>
+
+</div>
+</body>
+</html>

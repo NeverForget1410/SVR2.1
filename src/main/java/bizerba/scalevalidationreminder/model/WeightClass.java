@@ -1,0 +1,44 @@
+package bizerba.scalevalidationreminder.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="weight_class")
+public class WeightClass {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idWeightClass;
+
+    @Column(name = "weight_class_name")
+    private String weightClassName;
+
+    @Column(name ="weight_class_descryption")
+    private String weightClassDescryption;
+
+    @Column(name = "added_id")
+    private Integer addedId;
+
+    @Column(name = "date_addition")
+    private Date dateAddition;
+
+    @Column(name = "modified_id")
+    private Integer modifiedId;
+
+    @Column(name = "date_modyfication")
+    private Date dateModyfication;
+
+    @Column(name = "active")
+    private Integer active;
+}

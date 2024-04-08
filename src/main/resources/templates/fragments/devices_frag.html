@@ -1,0 +1,39 @@
+<div th:fragment="deviceInfoModal" xmlns:th="http://www.thymeleaf.org" >
+    <div class="modal fade" id="devicesModal" tabindex="-1" role="dialog" aria-labelledby="devicesModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="devicesModalLabel">Szczegóły</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Maksymalny zakres ważenia : </strong> <span class="black-text-modal" id="deviceRangeWeightMax"></span></p>
+                    <p><strong>Minimalna dopuszczona waga : </strong> <span class="black-text-modal" id="deviceRangeWeightMin"></span></p>
+                    <p><strong>Działka legalizacyjna "e" : </strong> <span class="black-text-modal" id="deviceValueLegalizationPlotE"></span></p>
+                    <p><strong>Działka odczytowa "d" : </strong> <span class="black-text-modal" id="deviceValuePlotReadingD"></span></p>
+                    <p><strong>Największa ujemna tara : </strong> <span class="black-text-modal" id="deviceBorderRangeTare"></span></p>
+                    <p><strong>Numer dopuszczenia : </strong> <span class="black-text-modal" id="deviceConformity"></span></p>
+                    <p><strong>Klasa dokładności ważenia : </strong> <span class="black-text-modal" id="weightClassName"></span></p>
+                    <p><strong>Opis : </strong> <span class="black-text-modal" id="deviceDescryption"></span></p>
+
+                    <h5 class="modal-title" id="asd">Dane sklepu</h5>
+                    <hr>
+                    <p><strong>Nazwa sklepu : </strong> <span class="black-text-modal" id="storeName"></span></p>
+                    <p><strong>Numer sklepu : </strong> <span class="black-text-modal" id="storeNo"></span></p>
+                    <p><strong>Miasto : </strong> <span class="black-text-modal" id="cityName"></span></p>
+                    <p><strong>Ulica : </strong> <span class="black-text-modal" id="addressStreet"></span></p>
+                    <p><strong>Numer lokalu : </strong> <span class="black-text-modal" id="addressNo"></span></p>
+                    <p><strong>Kod pocztowy : </strong> <span class="black-text-modal" id="cityZipCode"></span></p>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
