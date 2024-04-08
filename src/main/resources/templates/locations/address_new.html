@@ -14,7 +14,7 @@
                 <div class="row mb-4">
                 <div class="col">
                     <div class="form-outline">
-<!--                    <label for="idCity" class="form-label">Miasto</label>-->
+                    <label for="idCity" class="form-label">Miasto</label>
                         <select class="form-select" id="idCity" th:field="*{city.idCity}" required>
                             <option value=""></option>
                             <option th:each="city : ${cityList}" th:value="${city.idCity}"
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col">
                     <div class="form-outline">
-<!--                        <label for="addressStreet" class="form-label">Nazwa ulicy</label>-->
+                        <label for="addressStreet" class="form-label">Nazwa ulicy</label>
                         <input type="text" class="form-control"  id="addressStreet" name="addressStreet"
                                th:field="*{addressStreet}" placeholder="Wprowadź nazwe ulicy" required>
                     </div>
