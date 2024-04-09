@@ -1952,6 +1952,10 @@ progress {
 }
 .form-label {
   margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+.form-label-cent{
+  text-align: center;
 }
 
 .col-form-label {
