@@ -16,5 +16,7 @@ public interface AddressService {
 
    void saveAddress(Address address, Principal principal);
 
-   void deleteAddress(Address address);
+   void deleteAddressById(Integer idAddress);
+
+   Address getAddressById(Integer idAddress);
 }

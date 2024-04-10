@@ -15,4 +15,12 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     }
 
+    var alerts = document.querySelectorAll('.auto-dismiss');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            alert.style.display = 'none';
+        }, 2500);
+    });
+
 });
+

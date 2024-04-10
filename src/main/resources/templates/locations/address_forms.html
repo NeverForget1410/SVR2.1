@@ -7,9 +7,12 @@
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
                 <li class="breadcrumb-item active"><a href="/address">Adresy</a></li>
-                <li class="breadcrumb-item active">Nowy Adres</li>
+                <li class="breadcrumb-item active"
+                    th:text="${newAddress.idAddress} != null ? 'Edytuj Adres' : 'Nowy Adres'">Nowy Adres
+                </li>
             </ol>
             <form class="px-4" th:action="@{/saveAddress}" th:object="${newAddress}" method="post">
+                <input type="hidden" th:field="*{idAddress}"/>
                 <div class="row justify-content-center mb-3">
                     <div class="col-md-3 ">
                         <div class="form-group form-label-cent">
@@ -23,26 +26,27 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                <div class="col-md-4">
-                        <label for="addressStreet" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control"  id="addressStreet" name="addressStreet"
-                               th:field="*{addressStreet}" placeholder="Nazwa ulicy" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="addressNo" class="form-label ">Numer lokalu</label>
-                    <input type="text" class="form-control"  id="addressNo" name="addressNo"
-                           th:field="*{addressNo}" placeholder="Numer lokalu/mieszkania" required>
-                </div>
                     <div class="col-md-4">
-                            <label for="cityZipCode" class="form-label ">Kod pocztowy</label>
-                            <input type="text" class="form-control"  id="cityZipCode" name="cityZipCode"
-                                   th:field="*{cityZipCode}" placeholder="Kod pocztowy" required>
+                        <label for="addressStreet" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="addressStreet" name="addressStreet"
+                               th:field="*{addressStreet}" placeholder="Nazwa ulicy" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="addressNo" class="form-label ">Numer lokalu</label>
+                        <input type="text" class="form-control" id="addressNo" name="addressNo"
+                               th:field="*{addressNo}" placeholder="Numer lokalu/mieszkania" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="cityZipCode" class="form-label ">Kod pocztowy</label>
+                        <input type="text" class="form-control" id="cityZipCode" name="cityZipCode"
+                               th:field="*{cityZipCode}" placeholder="Kod pocztowy" required>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-4">
                     <div class="form-outline w-50 mb-4">
                         <label class="form-label" for="addreessDescryption">Opis lokalizacji</label>
-                        <textarea class="form-control" id="addreessDescryption" rows="4" th:field="*{addressDescryption}" placeholder="Opis lokalizacji"></textarea>
+                        <textarea class="form-control" id="addreessDescryption" rows="4"
+                                  th:field="*{addressDescryption}" placeholder="Opis lokalizacji"></textarea>
                     </div>
                 </div>
                 <div class="text-center">
@@ -53,16 +57,16 @@
 
     </main>
     <script>
-    $(document).ready(function () {
-    $('#cityZipCode').mask('00-000');
-    });
+        $(document).ready(function () {
+            $('#cityZipCode').mask('00-000');
+        });
 
-    $(document).ready(function () {
-    $('#idCity').select2({
-    placeholder: "Wybierz miasto",
-    allowClear: true
-    });
-    });
+        $(document).ready(function () {
+            $('#idCity').select2({
+                placeholder: "Wybierz miasto",
+                allowClear: true
+            });
+        });
     </script>
 
 </div>

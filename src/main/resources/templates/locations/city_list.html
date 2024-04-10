@@ -4,16 +4,28 @@
 <div layout:fragment="content">
         <main>
             <div>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                    <li class="breadcrumb-item active">Miasta</li>
-                </ol>
+                <div class="container-fluid px-4">
+                    <ol class="breadcrumb mb-4 mt-4">
+                        <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+                        <li class="breadcrumb-item active">Adresy</li>
+                    </ol>
+ <!--ALERTY-->
+                    <div>
+                        <div th:if="${successMessage}" class="alert alert-success auto-dismiss" role="alert">
+                            <span th:text="${successMessage}"></span>
+                        </div>
+                        <div th:if="${deleteMessage}" class="alert alert-danger auto-dismiss" role="alert">
+                            <span th:text="${deleteMessage}"></span>
+                        </div>
+                    </div>
+<!--Brak danych do wyświetlenia-->
                 <div th:if="${totalRecordsCity < 1}" class="alert alert-danger d-flex align-items-center" role="alert">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                     <div>
                         Brak przypisanych miast
                     </div>
                 </div>
+<!--Nagłówek tabeli-->
                 <div th:if="${totalRecordsCity > 1}" class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-table me-1"></i>Miasta</div>
@@ -32,6 +44,7 @@
                             </div>
                         </div>
                     </div>
+<!--Tabela-->
                     <div class="table-responsive text-center">
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
@@ -54,6 +67,7 @@
                             </tbody>
                         </table>
                     </div>
+<!--Przyciski nawigacyjne-->
                     <div th:if="${totalRecordsCity>10}" class="d-flex justify-content-between align-items-center mb-3">
                         <nav aria-label="Navigation" class="flex-grow-1">
                             <ul class="pagination justify-content-center mt-1">

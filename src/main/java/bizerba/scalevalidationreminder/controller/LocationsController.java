@@ -10,10 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -38,18 +36,39 @@ public class LocationsController {
         return "locations/address_list.html";
     }
 
-    @GetMapping("/address/newAddress")
-    public String newAddress(Model model) {
-        Address newAddress = new Address();
-        model.addAttribute("newAddress", newAddress);
+    @GetMapping("/address/newOrEditAddress")
+    public String newOrEditAddress(@RequestParam(required = false) Integer idAddress, Model model) {
+        Address address;
+        if (idAddress != null) {
+            address = addressService.getAddressById(idAddress);
+        } else {
+            address = new Address();
+        }
+        model.addAttribute("newAddress", address);
         model.addAttribute("cityList", cityService.getAllCity());
-        return "locations/address_new.html";
+        return "locations/address_forms.html";
     }
     @PostMapping("/saveAddress")
-    public String saveAddress(@ModelAttribute("newAddress") Address newAddress, Principal principal) {
-        addressService.saveAddress(newAddress, principal);
+    public String saveAddress(@ModelAttribute("newAddress") Address newAddress, Principal principal, RedirectAttributes redirectAttributes) {
+        if (newAddress.getIdAddress() == null) {
+            addressService.saveAddress(newAddress, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Adres został pomyślnie dodany.");
+        } else {
+            addressService.saveAddress(newAddress, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Adres został pomyślnie zaktualizowany.");
+        }
+
         return "redirect:/address";
     }
+
+    @GetMapping("/deleteAddress/{idAddress}")
+    public String deleteeAddress(@PathVariable(value = "idAddress") Integer idAddress, RedirectAttributes redirectAttributes) {
+        this.addressService.deleteAddressById(idAddress);
+        redirectAttributes.addFlashAttribute("deleteMessage", "Adres został pomyślnie usunięty.");
+        return "redirect:/address";
+    }
+
+
 
 
 

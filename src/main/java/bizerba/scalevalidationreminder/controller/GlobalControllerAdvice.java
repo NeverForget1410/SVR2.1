@@ -1,10 +1,10 @@
 package bizerba.scalevalidationreminder.controller;
 
+import bizerba.scalevalidationreminder.exception.AddressNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -20,6 +20,11 @@ public class GlobalControllerAdvice {
     }
 
 
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<String> addressNotFound(AddressNotFoundException ex){
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
 
 //    @GetMapping"/404"
