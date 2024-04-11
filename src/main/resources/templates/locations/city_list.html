@@ -3,9 +3,8 @@
 <body>
 <div layout:fragment="content">
         <main>
-            <div>
-                <div class="container-fluid px-4">
-                    <ol class="breadcrumb mb-4 mt-4">
+            <div class="container-fluid px-4">
+                <ol class="breadcrumb mb-4 mt-4">
                         <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
                         <li class="breadcrumb-item active">Adresy</li>
                     </ol>
@@ -30,7 +29,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-table me-1"></i>Miasta</div>
                         <div class="d-flex align-items-center">
-                            <a th:href="@{/#}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Miasta</a>
+                            <a th:href="@{/city/newOrEditCity}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Miasta</a>
                             <div th:if="${totalRecordsCity>10}" class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-list"></i> <span th:text="${currentSizeCity}">Liczba rekordów</span>
@@ -59,9 +58,10 @@
                                 <td class="id_list" th:text="${allCityList.idCity}"></td>
                                 <td th:text="${allCityList.cityName}"></td>
                                 <td class="function_buttons">
-                                    <a th:href="@{/#}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
-                                    <a th:href="@{/#}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-
+                                    <a th:href="@{/city/newOrEditCity(idCity=${allCityList.idCity})}"
+                                       class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
+                                    <a th:href="@{/deleteCity/{idCity}(idCity=${allCityList.idCity})}"
+                                       class="btn btn-danger"><i class="fas fa-trash-alt"></i> </a>
                                 </td>
                             </tr>
                             </tbody>

@@ -57,17 +57,15 @@ public class LocationsController {
             addressService.saveAddress(newAddress, principal);
             redirectAttributes.addFlashAttribute("successMessage", "Adres został pomyślnie zaktualizowany.");
         }
-
         return "redirect:/address";
     }
 
     @GetMapping("/deleteAddress/{idAddress}")
-    public String deleteeAddress(@PathVariable(value = "idAddress") Integer idAddress, RedirectAttributes redirectAttributes) {
+    public String deleteAddress(@PathVariable(value = "idAddress") Integer idAddress, RedirectAttributes redirectAttributes) {
         this.addressService.deleteAddressById(idAddress);
         redirectAttributes.addFlashAttribute("deleteMessage", "Adres został pomyślnie usunięty.");
         return "redirect:/address";
     }
-
 
 
 
@@ -83,5 +81,35 @@ public class LocationsController {
         return "locations/city_list.html";
     }
 
+    @GetMapping("/city/newOrEditCity")
+    public String newOrEditCity(@RequestParam(required = false) Integer idCity, Model model) {
+        City city;
+        if (idCity != null) {
+            city = cityService.getCityById(idCity);
+        } else {
+            city = new City();
+        }
+        model.addAttribute("newCity", city);
+        return "locations/city_forms.html";
+    }
+
+    @PostMapping("/saveCity")
+    public String saveCity(@ModelAttribute("newCity") City newCity, Principal principal, RedirectAttributes redirectAttributes) {
+        if (newCity.getIdCity() == null) {
+            cityService.saveCity(newCity, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie dodane.");
+        } else {
+            cityService.saveCity(newCity, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie zaktualizowane.");
+        }
+        return "redirect:/city";
+    }
+
+    @GetMapping("/deleteCity/{idCity}")
+    public String deleteCity(@PathVariable(value = "idCity") Integer idCity, RedirectAttributes redirectAttributes) {
+        this.cityService.deleteCityById(idCity);
+        redirectAttributes.addFlashAttribute("deleteMessage", "Miasto o numerze " + idCity +  " zostało pomyślnie usunięte.");
+        return "redirect:/city";
+    }
 
 }

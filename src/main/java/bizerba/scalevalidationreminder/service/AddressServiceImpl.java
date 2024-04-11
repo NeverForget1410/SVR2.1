@@ -4,10 +4,12 @@ import bizerba.scalevalidationreminder.exception.AddressNotFoundException;
 import bizerba.scalevalidationreminder.model.Address;
 import bizerba.scalevalidationreminder.repository.AddressRepository;
 import bizerba.scalevalidationreminder.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Date;
@@ -17,10 +19,13 @@ import java.util.Optional;
 @Service
 public class AddressServiceImpl implements AddressService{
 
-    @Autowired
-    private AddressRepository addressRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final UserRepository userRepository;
+
+    public AddressServiceImpl(AddressRepository addressRepository, UserRepository userRepository) {
+        this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Page<Address> getAllAddressPaginated(Pageable pageable) {
@@ -28,6 +33,7 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
+    @Transactional
     public void saveAddress(Address address, Principal principal) {
         String userLogin = principal.getName();
         userRepository.findByUserLogin(userLogin).ifPresent(user -> {
@@ -51,6 +57,7 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
+    @Transactional
     public void deleteAddressById(Integer idAddress) {
         this.addressRepository.deleteById(idAddress);
     }
