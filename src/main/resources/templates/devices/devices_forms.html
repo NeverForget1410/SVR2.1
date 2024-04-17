@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
+<body>
+<div layout:fragment="content">
+    <main>
+        <div class="container-fluid px-4">
+            <ol class="breadcrumb mb-4 mt-4">
+                <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+                <li class="breadcrumb-item active"><a href="api/devices/list">Urządzenia</a></li>
+                <li class="breadcrumb-item active"
+                    th:text="${newOrEditDevice.idDevice} != null ? 'Edytuj urządzenie' : 'Nowe urządzenie'">
+                </li>
+            </ol>
+            <form class="px-4" th:action="@{/saveDevice}" th:object="${newOrEditDevice}" method="post">
+                <input type="hidden" th:field="*{idDevice}"/>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label for="deviceSerialNo" class="form-label ">Numer seryny</label>
+                        <input type="text" class="form-control" id="deviceSerialNo" name="deviceSerialNo"
+                               th:field="*{deviceSerialNo}" placeholder="Numer seryjny" required>
+                    </div>
+                    <div class="col-md-3 ">
+
+
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

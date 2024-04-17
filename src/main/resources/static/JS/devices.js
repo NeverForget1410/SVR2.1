@@ -4,7 +4,7 @@ $(document).on("click", ".open-modal", function () {
     console.log(event.detail.value)
     $.ajax({
         type: "GET",
-        url: `/deviceDetails/${idDevice}`,
+        url: `/api/devices/deviceDetails/${idDevice}`,
         success: function (data) {
             // Ustawia dane o sklepie w modalu
             $("#deviceRangeWeightMax").text(data.deviceRangeWeightMin);

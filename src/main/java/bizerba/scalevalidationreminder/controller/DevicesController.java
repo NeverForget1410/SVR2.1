@@ -1,23 +1,25 @@
 package bizerba.scalevalidationreminder.controller;
 
 import bizerba.scalevalidationreminder.model.Devices;
+import bizerba.scalevalidationreminder.repository.ManufacturerRepository;
 import bizerba.scalevalidationreminder.repository.UserRepository;
 import bizerba.scalevalidationreminder.service.DevicesService;
+import bizerba.scalevalidationreminder.service.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
 @Controller
+@RequestMapping("/api/devices")
 public class DevicesController {
 
     @Autowired
@@ -26,7 +28,10 @@ public class DevicesController {
     @Autowired
     public UserRepository userRepository;
 
-    @GetMapping("/devices")
+    @Autowired
+    public ManufacturerService manufacturerService;
+
+    @GetMapping("/list")
     public String getAllDevicesForUser(Model model,
                                        @RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size, Principal principal) {
@@ -44,9 +49,7 @@ public class DevicesController {
         return "devices/devices_list.html";
     }
 
-
     //Wyświelanie modala
-
     @GetMapping("/deviceDetails/{idDevice}")
     @ResponseBody
     public Devices getDevicesDetails(@PathVariable(value = "idDevice") Integer idDevice, Model model) {
@@ -54,4 +57,40 @@ public class DevicesController {
         model.addAttribute("devices", devices);
         return devicesService.getDeviceById(idDevice);
     }
+
+
+    @GetMapping("/newOrEditDevice")
+    public String newOrEditDevice(@RequestParam(required = false) Integer idDevice,Model model) {
+        Devices devices;
+        if (idDevice != null) {
+            devices = devicesService.getDeviceById(idDevice);
+        } else {
+            devices = new Devices();
+        }
+        model.addAttribute("newOrEditDevice", devices);
+        model.addAttribute("manufacturerList", manufacturerService.getAllManufacturers());
+        return "devices/devices_forms.html";
+    }
+    @PostMapping("/saveDevice")
+    public String saveDevices(@ModelAttribute("newOrEditDevice") Devices newOrEditDevice, Principal principal, RedirectAttributes redirectAttributes) {
+        if (newOrEditDevice.getIdDevice() == null) {
+            devicesService.saveDevice(newOrEditDevice, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie dodane.");
+        } else {
+            devicesService.saveDevice(newOrEditDevice, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie zaktualizowane.");
+        }
+        return "redirect:/devices";
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/deleteDevice/{idDevice}")
+    public String deleteDevice(@PathVariable(value = "idDevice") Integer idDevice, Principal principal, RedirectAttributes redirectAttributes) {
+        this.devicesService.deleteDeviceById(idDevice);
+        redirectAttributes.addFlashAttribute("deleteMessage", "Urządzenie o ID: " + idDevice +  " zostało pomyślnie usunięte.");
+        return "redirect:/devices";
+    }
+
+
 }

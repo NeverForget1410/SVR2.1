@@ -6,13 +6,13 @@
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active"><a href="/city">Miasta</a></li>
+                <li class="breadcrumb-item active"><a th:href="@{/api/locations/city}">Miasta</a></li>
                 <li class="breadcrumb-item active"
                     th:text="${newCity.idCity} != null ? 'Edytuj Adres' : 'Nowy Adres'">Nowy Adres
                 </li>
             </ol>
-            <form class="px-4" th:action="@{/saveCity}" th:object="${newCity}" method="post">
-                <input type="hidden" th:field="*{idCity}"/>
+            <form class="px-4" th:action="@{/api/locations/saveCity}" th:object="${newCity}" method="post">
+            <input type="hidden" th:field="*{idCity}"/>
                     <div class="row justify-content-center mb-3">
                         <div class="col-md-3 ">
                             <label for="cityName" class="form-label ">Nazwa miejscowości</label>

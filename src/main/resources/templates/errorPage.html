@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Validation App 1.0</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
+    <meta name="description" content="Aplikacja do zarządzania legalizacjami urządzen wagowych" />
+    <meta name="author" content="Patryk Figura" />
+    <title>ScaleValidationReminder</title>
+
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../static/css/404.css">
+    <link rel="stylesheet" href="/css/404.css">
 </head>
 <body>
 <div class="page-wrap d-flex flex-row align-items-center">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                <span class="display-1 d-block">Error 404</span>
+                <span class="display-1 d-block">Wystąpił błąd</span>
                 <div class="d-flex justify-content-center">
                     <div class="gearbox">
                         <div class="overlay"></div>
@@ -51,12 +56,14 @@
                     </div>
                 </div>
                 <br>
-                <div class="mb-6 lead">Strona którą otwierasz nie istnieje lub jej nazwa została zmieniona</div>
+                <div class="mb-6 lead"><p>Status: <span th:text="${errorCode}"></span></p></div>
+                <div class="mb-6 lead"><span th:text="${errorMessage}"></span></p></div>
                 <br>
+                <a href="/">
                 <button class="button">
                     <span class="button-content">Strona głowna</span>
-                    </a>
                 </button>
+                </a>
             </div>
         </div>
     </div>

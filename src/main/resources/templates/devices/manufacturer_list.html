@@ -8,7 +8,7 @@
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Urządzenia</li>
+                <li class="breadcrumb-item active" aria-current="page">Producenci</li>
             </ol>
             <div>
                 <div th:if="${successMessage}" class="alert alert-success auto-dismiss" role="alert">
@@ -47,22 +47,14 @@
                         <thead>
                         <tr>
                             <th>Lp.</th>
-                            <th>Model</th>
-                            <th>Numer Seryjny</th>
-                            <th>Data legalizacji</th>
-                            <th>Data następnej legalizacji</th>
-                            <th>Informacje dodatkowe</th>
+                            <th>Producent</th>
                             <th>Przyciski funkcyjne</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="allDevicesList : ${allDevicesList}">
-                            <td class="id_list align-middle" th:text="${allDevicesList.idDevice}"></td>
-                            <td th:text="${allDevicesList.deviceModel.deviceModelName}"></td>
-                            <td th:text="${allDevicesList.deviceSerialNo}"></td>
-                            <td th:text="${#dates.format(allDevicesList.deviceDateLegalization, 'dd-MM-yyyy')}"></td>
-                            <td th:text="${#dates.format(allDevicesList.deviceDateNextLegalization, 'dd-MM-yyyy')}"></td>
-                            <td th:text="${allDevicesList.store.storeName}+' '+${allDevicesList.store.storeNo}"></td>
+                        <tr th:each="allManufacturersList : ${allManufacturersList}">
+                            <td class="id_list align-middle" th:text="${allManufacturersList.idManufacturer}"></td>
+                            <td th:text="${allManufacturersList.manufacturerName}"></td>
                             <td class="function_buttons">
                                 <a th:href="@{/api/devices/newOrEditDevice(idDevice=${allDevicesList.idDevice})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
                                 <a th:href="@{/api/devices/deleteDevice/{idDevice}(idDevice=${allDevicesList.idDevice})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>

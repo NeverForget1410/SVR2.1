@@ -10,6 +10,8 @@ import bizerba.scalevalidationreminder.service.AddressService;
 import bizerba.scalevalidationreminder.service.AddressServiceImpl;
 import bizerba.scalevalidationreminder.service.CityService;
 import bizerba.scalevalidationreminder.service.DevicesService;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,6 +60,7 @@ public class MainController {
     public String logout() {
         return "/logout.html";
     }
+
 
 
 

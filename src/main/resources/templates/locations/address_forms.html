@@ -6,12 +6,12 @@
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active"><a href="/address">Adresy</a></li>
+                <li class="breadcrumb-item active"><a href="/api/locations/address">Adresy</a></li>
                 <li class="breadcrumb-item active"
                     th:text="${newAddress.idAddress} != null ? 'Edytuj Adres' : 'Nowy Adres'">Nowy Adres
                 </li>
             </ol>
-            <form class="px-4" th:action="@{/saveAddress}" th:object="${newAddress}" method="post">
+            <form class="px-4" th:action="@{/api/locations/saveAddress}" th:object="${newAddress}" method="post">
                 <input type="hidden" th:field="*{idAddress}"/>
                 <div class="row justify-content-center mb-3">
                     <div class="col-md-3 ">

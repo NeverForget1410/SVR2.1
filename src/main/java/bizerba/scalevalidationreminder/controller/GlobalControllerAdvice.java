@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
@@ -22,14 +23,18 @@ public class GlobalControllerAdvice {
 
 
     @ExceptionHandler(AddressNotFoundException.class)
-    public ResponseEntity<String> addressNotFound(AddressNotFoundException ex){
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ModelAndView addressNotFound(AddressNotFoundException ex){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("errorMessage", ex.getMessage());
+        modelAndView.setViewName("404");
+        return modelAndView;
     }
 
 
-//    @GetMapping"/404"
-//    public String notFound(){
-//        return "/404.html";
-//    }
+    @GetMapping("/404")
+    public String notFound(Model model){
+        model.addAttribute("errorMessage", "The page you are looking for does not exist.");
+        return "404";  // Nazwa widoku 404
+    }
 
 }

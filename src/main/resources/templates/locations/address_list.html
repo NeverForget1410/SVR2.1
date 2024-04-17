@@ -31,8 +31,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-table me-1"></i>Adresów</div>
                         <div class="d-flex align-items-center">
-                            <a th:href="@{/address/newOrEditAddress}" class="btn btn-outline-dark me-2"
-                               id="addDevice"><i class="fa-solid fa-plus"></i> Adres</a>
+                            <a th:href="@{/api/locations/address/newOrEditAddress}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Adres</a>
                             <div th:if="${totalRecordsAddress>10}" class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -40,13 +39,13 @@
                                         th:text="${currentSizeAddress}">Liczba rekordów</span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" th:href="@{/address(pageSize=10, pageNo=0)}">10</a>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/address(pageSize=10, pageNo=0)}">10</a>
                                     </li>
-                                    <li><a class="dropdown-item" th:href="@{/address(pageSize=20, pageNo=0)}">20</a>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/address(pageSize=20, pageNo=0)}">20</a>
                                     </li>
-                                    <li><a class="dropdown-item" th:href="@{/address(pageSize=50, pageNo=0)}">50</a>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/address(pageSize=50, pageNo=0)}">50</a>
                                     </li>
-                                    <li><a class="dropdown-item" th:href="@{/address(pageSize=100, pageNo=0)}">100</a>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/address(pageSize=100, pageNo=0)}">100</a>
                                     </li>
                                 </ul>
                             </div>
@@ -75,10 +74,9 @@
                                 <td th:text="${allAddressList.cityZipCode}"></td>
                                 <td th:text="${allAddressList.addressDescryption}"></td>
                                 <td class="function_buttons">
-                                    <a th:href="@{/address/newOrEditAddress(idAddress=${allAddressList.idAddress})}"
-                                       class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
-                                    <a th:href="@{/deleteAddress/{idAddress}(idAddress=${allAddressList.idAddress})}"
-                                       class="btn btn-danger"><i class="fas fa-trash-alt"></i> </a>
+                                    <a th:href="@{/api/locations/address/newOrEditAddress(idAddress=${allAddressList.idAddress})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
+                                    <a th:href="@{/api/locations/deleteAddress/{idAddress}(idAddress=${allAddressList.idAddress})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -97,7 +95,7 @@
                                 </li>
                                 <li class="page-item" th:classappend="${currentPageAddreess == 0} ? 'disabled' : ''">
                                     <a class="page-link"
-                                       th:href="@{/address(pageNo=${currentPageAddress - 1}, pageSize=${currentSizeAddress})}"
+                                       th:href="@{address(pageNo=${currentPageAddress - 1}, pageSize=${currentSizeAddress})}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
@@ -105,13 +103,13 @@
                                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesAddress - 1)}"
                                     th:classappend="${i == currentPageAddress} ? 'active' : ''">
                                     <a class="page-link"
-                                       th:href="@{/address(pageNo=${i}, pageSize=${currentSizeAddress})}"
+                                       th:href="@{address(pageNo=${i}, pageSize=${currentSizeAddress})}"
                                        th:text="${i + 1}"></a>
                                 </li>
                                 <li class="page-item"
                                     th:classappend="${currentPageAddress + 1 >= totalPagesAddress} ? 'disabled' : ''">
                                     <a class="page-link"
-                                       th:href="@{/address(pageNo=${currentPageAddress + 1}, pageSize=${currentSizeAddress})}"
+                                       th:href="@{address(pageNo=${currentPageAddress + 1}, pageSize=${currentSizeAddress})}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
@@ -119,7 +117,7 @@
                                 <li class="page-item"
                                     th:classappend="${currentPageAddress + 1 >= totalPagesAddress} ? 'disabled' : ''">
                                     <a class="page-link"
-                                       th:href="@{/address(pageNo=${totalPagesAddress - 1}, pageSize=${currentSizeAddress})}"
+                                       th:href="@{address(pageNo=${totalPagesAddress - 1}, pageSize=${currentSizeAddress})}"
                                        aria-label="Last">
                                         <span aria-hidden="true">&raquo;&raquo;</span>
                                     </a>

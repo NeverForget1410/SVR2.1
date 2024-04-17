@@ -8,6 +8,7 @@ import bizerba.scalevalidationreminder.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 
 @Controller
+@RequestMapping("/api/locations")
 public class LocationsController {
 
     @Autowired
@@ -57,14 +59,16 @@ public class LocationsController {
             addressService.saveAddress(newAddress, principal);
             redirectAttributes.addFlashAttribute("successMessage", "Adres został pomyślnie zaktualizowany.");
         }
-        return "redirect:/address";
+        return "redirect:/api/locations/address";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/deleteAddress/{idAddress}")
     public String deleteAddress(@PathVariable(value = "idAddress") Integer idAddress, RedirectAttributes redirectAttributes) {
         this.addressService.deleteAddressById(idAddress);
         redirectAttributes.addFlashAttribute("deleteMessage", "Adres został pomyślnie usunięty.");
-        return "redirect:/address";
+        return "redirect:/api/locations/address";
     }
 
 
@@ -102,14 +106,15 @@ public class LocationsController {
             cityService.saveCity(newCity, principal);
             redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie zaktualizowane.");
         }
-        return "redirect:/city";
+        return "redirect:/api/locations/city";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/deleteCity/{idCity}")
     public String deleteCity(@PathVariable(value = "idCity") Integer idCity, RedirectAttributes redirectAttributes) {
         this.cityService.deleteCityById(idCity);
         redirectAttributes.addFlashAttribute("deleteMessage", "Miasto o numerze " + idCity +  " zostało pomyślnie usunięte.");
-        return "redirect:/city";
+        return "redirect:/api/locations/city";
     }
 
 }
