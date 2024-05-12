@@ -6,10 +6,9 @@
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active"><a href="/api/locations/address">Adresy</a></li>
+                <li class="breadcrumb-item active"><a href="/api/locations/addressList">Lista adresów</a></li>
                 <li class="breadcrumb-item active"
-                    th:text="${newAddress.idAddress} != null ? 'Edytuj Adres' : 'Nowy Adres'">Nowy Adres
-                </li>
+                    th:text="${newAddress.idAddress} != null ? 'Edytuj Adres' : 'Nowy Adres'"></li>
             </ol>
             <form class="px-4" th:action="@{/api/locations/saveAddress}" th:object="${newAddress}" method="post">
                 <input type="hidden" th:field="*{idAddress}"/>
@@ -20,7 +19,7 @@
                             <select class="form-select" id="idCity" th:field="*{city.idCity}" required>
                                 <option value=""></option>
                                 <option th:each="city : ${cityList}" th:value="${city.idCity}"
-                                        th:text="${city.cityName}"/>
+                                        th:text="${city.cityName}"></option>
                             </select>
                         </div>
                     </div>
@@ -50,6 +49,7 @@
                     </div>
                 </div>
                 <div class="text-center">
+                    <a href="/api/locations/addressList" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
                 </div>
             </form>

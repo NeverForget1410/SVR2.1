@@ -1,26 +1,3 @@
-FORM
-
-<!DOCTYPE html>
-<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
-<body>
-<div layout:fragment="content">
-    <main>
-        <div>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active"><a href="#">Adresy</a></li>
-<!--                <li class="breadcrumb-item active"-->
-<!--                    th:text="${#.idAddress} != null ? 'Edytuj Adres' : 'Nowy Adres'">Nowy Adres-->
-<!--                </li>-->
-            </ol>
-        </div>
-    </main>
-</div>
-</body>
-</html>
-
-
-LIST
 <!DOCTYPE html>
 <html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
 <body>
@@ -30,7 +7,7 @@ LIST
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active">zmiana</li>
+                <li class="breadcrumb-item active">Klasy ważenia</li>
             </ol>
             <!--                ALERTY-->
             <div>
@@ -42,7 +19,7 @@ LIST
                 </div>
             </div>
             <!--                Brak danych do wyświetlenia-->
-            <div th:if="${zmiana < 1}" class="alert alert-danger d-flex align-items-center"
+            <div th:if="${totalRecordsWeightClass < 1}" class="alert alert-danger d-flex align-items-center"
                  role="alert">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div>
@@ -50,25 +27,25 @@ LIST
                 </div>
             </div>
             <!--                Nagłówek tabeli-->
-            <div th:if="${zmiana> 1}" class="card mb-4">
+            <div th:if="${totalRecordsWeightClass > 1}" class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <div><i class="fas fa-table me-1"></i>Adresów</div>
+                    <div><i class="fas fa-table me-1"></i></div>
                     <div class="d-flex align-items-center">
-                        <a th:href="@{zmiana}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Adres</a>
-                        <div th:if="${zmiana>10}" class="dropdown">
+                        <!--<a th:href="@{/api/devices/weightClassList/newOrEditWeightClass}" class="btn btn-outline-dark me-2" id="addWegithClass"><i class="fa-solid fa-plus"></i> Klasa ważenia</a>-->
+                        <div th:if="${totalRecordsWeightClass > 10}" class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-list"></i> <span
-                                    th:text="${zmiana}">Liczba rekordów</span>
+                                    th:text="${currentSizeWeightClass}">Liczba rekordów</span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" th:href="@{zmiana(pageSize=10, pageNo=0)}">10</a>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/weightClassList(pageSize=10, pageNo=0)}">10</a>
                                 </li>
-                                <li><a class="dropdown-item" th:href="@{zmiana(pageSize=20, pageNo=0)}">20</a>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/weightClassList(pageSize=20, pageNo=0)}">20</a>
                                 </li>
-                                <li><a class="dropdown-item" th:href="@{zmiana(pageSize=50, pageNo=0)}">50</a>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/weightClassList(pageSize=50, pageNo=0)}">50</a>
                                 </li>
-                                <li><a class="dropdown-item" th:href="@{zmiana(pageSize=100, pageNo=0)}">100</a>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/weightClassList(pageSize=100, pageNo=0)}">100</a>
                                 </li>
                             </ul>
                         </div>
@@ -80,18 +57,19 @@ LIST
                         <thead>
                         <tr>
                             <th>Lp.</th>
+                            <th>Nazwa klasy ważenia</th>
+                            <th>Opis</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="allAddressList : ${allAddressList}">
-                            <td class="id_list align-middle" th:text="${allAddressList.idAddress}"></td>
-                            <td th:text="${allAddressList.city.cityName}"></td>
-
-                            <td class="function_buttons">
-                                <a th:href="@{zmiana}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
-                                <a th:href="@{zmiana}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-
-                            </td>
+                        <tr th:each="allWeightClassList : ${allWeightClassList}">
+                            <td class="id_list align-middle" th:text="${allWeightClassList.idWeightClass}"></td>
+                            <td th:text="${allWeightClassList.weightClassName}"></td>
+                            <td th:text="${allWeightClassList.weightClassDescryption}"></td>
+<!--                            <td class="function_buttons">-->
+<!--                                <a th:href="@{#}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>-->
+<!--                                <a th:href="@{#}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>-->
+<!--                            </td>-->
                         </tr>
                         </tbody>
                     </table>
@@ -102,36 +80,36 @@ LIST
                     <nav aria-label="Navigation" class="flex-grow-1">
                         <ul class="pagination justify-content-center mt-1">
                             <li class="page-item" th:classappend="${currentPageAddress == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{/zmiana(page=0, size=${currentSize})}"
+                                <a class="page-link" th:href="@{/weightClassList(page=0, size=${currentSize})}"
                                    aria-label="First">
                                     <span aria-hidden="true">&laquo;&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item" th:classappend="${currentPageAddreess == 0} ? 'disabled' : ''">
+                            <li class="page-item" th:classappend="${currentPageWeightClass == 0} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{zmiana(pageNo=${currentPageAddress - 1}, pageSize=${currentSizeAddress})}"
+                                   th:href="@{weightClassList(pageNo=${currentPageWeightClass - 1}, pageSize=${currentPageWeightClass})}"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesAddress - 1)}"
-                                th:classappend="${i == currentPageAddress} ? 'active' : ''">
+                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesWeightClass - 1)}"
+                                th:classappend="${i == currentPageWeightClass} ? 'active' : ''">
                                 <a class="page-link"
-                                   th:href="@{zmiana(pageNo=${i}, pageSize=${currentSizeAddress})}"
+                                   th:href="@{weightClassList(pageNo=${i}, pageSize=${currentPageWeightClass})}"
                                    th:text="${i + 1}"></a>
                             </li>
                             <li class="page-item"
-                                th:classappend="${currentPageAddress + 1 >= totalPagesAddress} ? 'disabled' : ''">
+                                th:classappend="${currentPageWeightClass + 1 >= totalPagesWeightClass} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{zmiana(pageNo=${currentPageAddress + 1}, pageSize=${currentSizeAddress})}"
+                                   th:href="@{weightClassList(pageNo=${currentPageWeightClass + 1}, pageSize=${currentSizeWeightClass})}"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             <li class="page-item"
-                                th:classappend="${currentPageAddress + 1 >= totalPagesAddress} ? 'disabled' : ''">
+                                th:classappend="${currentPageWeightClass + 1 >= totalPagesWeightClass} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{zmiana(pageNo=${totalPagesAddress - 1}, pageSize=${currentSizeAddress})}"
+                                   th:href="@{weightClassList(pageNo=${totalPagesWeightClass - 1}, pageSize=${currentSizeWeightClass})}"
                                    aria-label="Last">
                                     <span aria-hidden="true">&raquo;&raquo;</span>
                                 </a>
@@ -140,7 +118,7 @@ LIST
                     </nav>
                     <div class="me-3">
                             <span class="text-muted">Łącznie rekordów: <span
-                                    th:text="${totalRecordsAddress}">0</span></span>
+                                    th:text="${totalRecordsWeightClass}">0</span></span>
                     </div>
                 </div>
             </div>

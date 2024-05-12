@@ -34,10 +34,10 @@
                                 <i class="fas fa-list"></i> <span th:text="${currentSize}">Liczba rekordów</span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" th:href="@{/api/devices/list(size=10, page=0)}">10</a></li>
-                                <li><a class="dropdown-item" th:href="@{/api/devices/list(size=20, page=0)}">20</a></li>
-                                <li><a class="dropdown-item" th:href="@{/api/devices/list(size=50, page=0)}">50</a></li>
-                                <li><a class="dropdown-item" th:href="@{/api/devices/list(size=100, page=0)}">100</a></li>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=10, page=0)}">10</a></li>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=20, page=0)}">20</a></li>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=50, page=0)}">50</a></li>
+                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=100, page=0)}">100</a></li>
                             </ul>
                         </div>
                     </div>
@@ -81,25 +81,25 @@
                     <nav aria-label="Navigation" class="flex-grow-1">
                         <ul class="pagination justify-content-center mt-1">
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{list(page=0, size=${currentSize})}" aria-label="First">
+                                <a class="page-link" th:href="@{deviceList(page=0, size=${currentSize})}" aria-label="First">
                                     <span aria-hidden="true">&laquo;&laquo;</span>
                                 </a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{list(page=${currentPage - 1}, size=${currentSize})}" aria-label="Previous">
+                                <a class="page-link" th:href="@{deviceList(page=${currentPage - 1}, size=${currentSize})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active' : ''">
-                                <a class="page-link" th:href="@{list(page=${i}, size=${currentSize})}" th:text="${i + 1}"></a>
+                                <a class="page-link" th:href="@{deviceList(page=${i}, size=${currentSize})}" th:text="${i + 1}"></a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{list(page=${currentPage + 1}, size=${currentSize})}" aria-label="Next">
+                                <a class="page-link" th:href="@{deviceList(page=${currentPage + 1}, size=${currentSize})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{list(page=${totalPages - 1}, size=${currentSize})}" aria-label="Last">
+                                <a class="page-link" th:href="@{deviceList(page=${totalPages - 1}, size=${currentSize})}" aria-label="Last">
                                     <span aria-hidden="true">&raquo;&raquo;</span>
                                 </a>
                             </li>

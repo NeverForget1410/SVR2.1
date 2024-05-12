@@ -31,7 +31,7 @@ public class DevicesController {
     @Autowired
     public ManufacturerService manufacturerService;
 
-    @GetMapping("/list")
+    @GetMapping("/deviceList")
     public String getAllDevicesForUser(Model model,
                                        @RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size, Principal principal) {
@@ -46,7 +46,7 @@ public class DevicesController {
         }, () -> {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika.");
         });
-        return "devices/devices_list.html";
+        return "devices/devicesList.html";
     }
 
     //Wyświelanie modala
@@ -69,7 +69,7 @@ public class DevicesController {
         }
         model.addAttribute("newOrEditDevice", devices);
         model.addAttribute("manufacturerList", manufacturerService.getAllManufacturers());
-        return "devices/devices_forms.html";
+        return "devices/devicesForm.html";
     }
     @PostMapping("/saveDevice")
     public String saveDevices(@ModelAttribute("newOrEditDevice") Devices newOrEditDevice, Principal principal, RedirectAttributes redirectAttributes) {

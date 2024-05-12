@@ -29,16 +29,16 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-table me-1"></i>Miasta</div>
                         <div class="d-flex align-items-center">
-                            <a th:href="@{/api/locations/city/newOrEditCity}" class="btn btn-outline-dark me-2" id="addOrEditCity"><i class="fa-solid fa-plus"></i> Miasta</a>
+                            <a th:href="@{/api/locations/cityList/newOrEditCity}" class="btn btn-outline-dark me-2" id="addOrEditCity"><i class="fa-solid fa-plus"></i> Miasta</a>
                             <div th:if="${totalRecordsCity>10}" class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-list"></i> <span th:text="${currentSizeCity}">Liczba rekordów</span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" th:href="@{/api/locations/city(pageSize=10, pageNo=0)}">10</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/api/locations/city(pageSize=20, pageNo=0)}">20</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/api/locations/city(pageSize=50, pageNo=0)}">50</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/api/locations/city(pageSize=100, pageNo=0)}">100</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/cityList(pageSize=10, pageNo=0)}">10</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/cityList(pageSize=20, pageNo=0)}">20</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/cityList(pageSize=50, pageNo=0)}">50</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/api/locations/cityList(pageSize=100, pageNo=0)}">100</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <td class="id_list" th:text="${allCityList.idCity}"></td>
                                 <td th:text="${allCityList.cityName}"></td>
                                 <td class="function_buttons">
-                                    <a th:href="@{/api/locations/city/newOrEditCity(idCity=${allCityList.idCity})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
+                                    <a th:href="@{/api/locations/cityList/newOrEditCity(idCity=${allCityList.idCity})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
                                     <a th:href="@{/api/locations/deleteCity/{idCity}(idCity=${allCityList.idCity})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
 
                                 </td>
@@ -71,25 +71,25 @@
                         <nav aria-label="Navigation" class="flex-grow-1">
                             <ul class="pagination justify-content-center mt-1">
                                 <li class="page-item" th:classappend="${currentPageCity == 0} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{/city(page=0, size=${currentSize})}" aria-label="First">
+                                    <a class="page-link" th:href="@{/cityList(page=0, size=${currentSize})}" aria-label="First">
                                         <span aria-hidden="true">&laquo;&laquo;</span>
                                     </a>
                                 </li>
                                 <li class="page-item" th:classappend="${currentPageCity == 0} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{city(pageNo=${currentPageCity - 1}, pageSize=${currentSizeCity})}" aria-label="Previous">
+                                    <a class="page-link" th:href="@{cityList(pageNo=${currentPageCity - 1}, pageSize=${currentSizeCity})}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesCity - 1)}" th:classappend="${i == currentPageCity} ? 'active' : ''">
-                                    <a class="page-link" th:href="@{city(pageNo=${i}, pageSize=${currentSizeCity})}" th:text="${i + 1}"></a>
+                                    <a class="page-link" th:href="@{cityList(pageNo=${i}, pageSize=${currentSizeCity})}" th:text="${i + 1}"></a>
                                 </li>
                                 <li class="page-item" th:classappend="${currentPageCity + 1 >= totalPagesCity} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{city(pageNo=${currentPageCity + 1}, pageSize=${currentSizeCity})}" aria-label="Next">
+                                    <a class="page-link" th:href="@{cityList(pageNo=${currentPageCity + 1}, pageSize=${currentSizeCity})}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
                                 <li class="page-item" th:classappend="${currentPageCity + 1 >= totalPagesCity} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{city(pageNo=${totalPagesCity - 1}, pageSize=${currentSizeCity})}" aria-label="Last">
+                                    <a class="page-link" th:href="@{cityList(pageNo=${totalPagesCity - 1}, pageSize=${currentSizeCity})}" aria-label="Last">
                                         <span aria-hidden="true">&raquo;&raquo;</span>
                                     </a>
                                 </li>

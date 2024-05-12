@@ -16,4 +16,7 @@ public interface ManufacturerService {
     void saveManufacturer(Manufacturer manufacturer, Principal principal);
     void deleteManufacturerById(Integer idManufacturer);
 
+    Manufacturer getManufacturerById(Integer idManufacturer);
+
+
 }

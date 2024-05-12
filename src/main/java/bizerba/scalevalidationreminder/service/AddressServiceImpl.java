@@ -4,8 +4,6 @@ import bizerba.scalevalidationreminder.exception.AddressNotFoundException;
 import bizerba.scalevalidationreminder.model.Address;
 import bizerba.scalevalidationreminder.repository.AddressRepository;
 import bizerba.scalevalidationreminder.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.Optional;
 
 
 @Service
@@ -30,6 +27,12 @@ public class AddressServiceImpl implements AddressService{
     @Override
     public Page<Address> getAllAddressPaginated(Pageable pageable) {
         return addressRepository.findAll(pageable);
+    }
+
+    @Override
+    public Address getAddressById(Integer idAddress) {
+        return addressRepository.findById(idAddress)
+                .orElseThrow(()-> new AddressNotFoundException("Nie znaleziono takiego adresu po ID: " + idAddress));
     }
 
     @Override
@@ -62,11 +65,7 @@ public class AddressServiceImpl implements AddressService{
         this.addressRepository.deleteById(idAddress);
     }
 
-    @Override
-    public Address getAddressById(Integer idAddress) {
-      return addressRepository.findById(idAddress)
-              .orElseThrow(()-> new AddressNotFoundException("Nie znaleziono takiego adresu po ID: " + idAddress));
-    }
+
 
 
 }

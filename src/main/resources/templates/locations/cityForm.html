@@ -6,7 +6,7 @@
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active"><a th:href="@{/api/locations/city}">Miasta</a></li>
+                <li class="breadcrumb-item active"><a th:href="@{/api/locations/cityList}">Miasta</a></li>
                 <li class="breadcrumb-item active"
                     th:text="${newCity.idCity} != null ? 'Edytuj Adres' : 'Nowy Adres'">Nowy Adres
                 </li>
@@ -21,6 +21,7 @@
                         </div>
                     </div>
                     <div class="text-center">
+                        <a href="/api/locations/cityList" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
                     </div>
             </form>

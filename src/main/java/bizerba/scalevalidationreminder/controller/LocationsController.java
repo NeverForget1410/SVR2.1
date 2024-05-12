@@ -2,7 +2,6 @@ package bizerba.scalevalidationreminder.controller;
 
 import bizerba.scalevalidationreminder.model.Address;
 import bizerba.scalevalidationreminder.model.City;
-import bizerba.scalevalidationreminder.repository.AddressRepository;
 import bizerba.scalevalidationreminder.service.AddressService;
 import bizerba.scalevalidationreminder.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +26,20 @@ public class LocationsController {
     public CityService cityService;
 
 
-    @GetMapping("/address")
-    public String getAllAddressPaginated(Model model, @RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
+    @GetMapping("/addressList")
+    public String getAllAddressPaginated(Model model,
+                                         @RequestParam(defaultValue = "0") int pageNo,
+                                         @RequestParam(defaultValue = "10") int pageSize) {
         Page<Address> addressPage = addressService.getAllAddressPaginated(PageRequest.of(pageNo,pageSize));
         model.addAttribute("allAddressList", addressPage.getContent());
         model.addAttribute("currentPageAddress", pageNo);
         model.addAttribute("currentSizeAddress", pageSize);
         model.addAttribute("totalPagesAddress", addressPage.getTotalPages());
         model.addAttribute("totalRecordsAddress", addressPage.getTotalElements());
-        return "locations/address_list.html";
+        return "locations/addressList.html";
     }
 
-    @GetMapping("/address/newOrEditAddress")
+    @GetMapping("/addressList/newOrEditAddress")
     public String newOrEditAddress(@RequestParam(required = false) Integer idAddress, Model model) {
         Address address;
         if (idAddress != null) {
@@ -48,7 +49,7 @@ public class LocationsController {
         }
         model.addAttribute("newAddress", address);
         model.addAttribute("cityList", cityService.getAllCity());
-        return "locations/address_forms.html";
+        return "locations/addressForm.html";
     }
     @PostMapping("/saveAddress")
     public String saveAddress(@ModelAttribute("newAddress") Address newAddress, Principal principal, RedirectAttributes redirectAttributes) {
@@ -59,7 +60,7 @@ public class LocationsController {
             addressService.saveAddress(newAddress, principal);
             redirectAttributes.addFlashAttribute("successMessage", "Adres został pomyślnie zaktualizowany.");
         }
-        return "redirect:/api/locations/address";
+        return "redirect:/api/locations/addressList";
     }
 
 
@@ -68,13 +69,13 @@ public class LocationsController {
     public String deleteAddress(@PathVariable(value = "idAddress") Integer idAddress, RedirectAttributes redirectAttributes) {
         this.addressService.deleteAddressById(idAddress);
         redirectAttributes.addFlashAttribute("deleteMessage", "Adres został pomyślnie usunięty.");
-        return "redirect:/api/locations/address";
+        return "redirect:/api/locations/addressList";
     }
 
 
 
 
-    @GetMapping("/city")
+    @GetMapping("/cityList")
     public String getAllCityPagable(Model model, @RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
         Page<City> cityPage = cityService.getAllCityPaginated(PageRequest.of(pageNo, pageSize));
         model.addAttribute("allCityList", cityPage.getContent());
@@ -82,10 +83,10 @@ public class LocationsController {
         model.addAttribute("currentSizeCity", pageSize);
         model.addAttribute("totalPagesCity", cityPage.getTotalPages());
         model.addAttribute("totalRecordsCity", cityPage.getTotalElements());
-        return "locations/city_list.html";
+        return "locations/cityList.html";
     }
 
-    @GetMapping("/city/newOrEditCity")
+    @GetMapping("/cityList/newOrEditCity")
     public String newOrEditCity(@RequestParam(required = false) Integer idCity, Model model) {
         City city;
         if (idCity != null) {
@@ -94,7 +95,7 @@ public class LocationsController {
             city = new City();
         }
         model.addAttribute("newCity", city);
-        return "locations/city_forms.html";
+        return "locations/cityForm.html";
     }
 
     @PostMapping("/saveCity")
@@ -106,7 +107,7 @@ public class LocationsController {
             cityService.saveCity(newCity, principal);
             redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie zaktualizowane.");
         }
-        return "redirect:/api/locations/city";
+        return "redirect:/api/locations/cityList";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -114,7 +115,7 @@ public class LocationsController {
     public String deleteCity(@PathVariable(value = "idCity") Integer idCity, RedirectAttributes redirectAttributes) {
         this.cityService.deleteCityById(idCity);
         redirectAttributes.addFlashAttribute("deleteMessage", "Miasto o numerze " + idCity +  " zostało pomyślnie usunięte.");
-        return "redirect:/api/locations/city";
+        return "redirect:/api/locations/cityList";
     }
 
 }

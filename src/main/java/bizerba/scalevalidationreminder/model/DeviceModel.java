@@ -31,6 +31,9 @@ public class DeviceModel {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
+    @Column(name = "added_id")
+    private Integer addedId;
+
     @Column(name = "date_addition")
     private Date dateAddition;
 

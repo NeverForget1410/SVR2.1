@@ -14,6 +14,16 @@
             <form class="px-4" th:action="@{/saveDevice}" th:object="${newOrEditDevice}" method="post">
                 <input type="hidden" th:field="*{idDevice}"/>
                 <div class="form-group row">
+                    <div class="col-md-3 ">
+                        <div class="form-group form-label-cent">
+                            <label for="idCity" class="form-label">Model urządzenia</label>
+                            <select class="form-select" id="idCity" th:field="*{city.idCity}" required>
+                                <option value=""></option>
+                                <option th:each="city : ${cityList}" th:value="${city.idCity}"
+                                        th:text="${city.cityName}"></option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <label for="deviceSerialNo" class="form-label ">Numer seryny</label>
                         <input type="text" class="form-control" id="deviceSerialNo" name="deviceSerialNo"
@@ -27,6 +37,8 @@
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
                 </div>
+
+
             </form>
         </div>
     </main>
