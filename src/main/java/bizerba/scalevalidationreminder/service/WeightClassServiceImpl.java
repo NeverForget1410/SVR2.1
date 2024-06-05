@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class WeightClassServiceImpl implements WeighClassService{
@@ -27,6 +28,11 @@ public class WeightClassServiceImpl implements WeighClassService{
     @Override
     public Page<WeightClass> getAllWeightClassPaginated(Pageable pageable) {
         return weightClassRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<WeightClass> getAllWeightClasses() {
+        return weightClassRepository.findAll();
     }
 
     @Override
@@ -63,4 +69,6 @@ public class WeightClassServiceImpl implements WeighClassService{
     public void deleteWeightClassById(Integer idWeightClass) {
         this.weightClassRepository.deleteById(idWeightClass);
     }
+
+
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class DeviceModelServiceImpl implements DeviceModelService {
@@ -33,6 +34,11 @@ public class DeviceModelServiceImpl implements DeviceModelService {
     public DeviceModel getDeviceModelById(Integer idDeviceModel) {
         return deviceModelRepository.findById(idDeviceModel)
                 .orElseThrow(() -> new RuntimeException("Device Model Not Found" + idDeviceModel));
+    }
+
+    @Override
+    public List<DeviceModel> getAllDeviceModels() {
+        return deviceModelRepository.findAll();
     }
 
     @Override

@@ -81,4 +81,7 @@ public class Devices {
     @Column(name = "active")
     private Integer active;
 
+
+
+
 }

@@ -14,31 +14,100 @@
             <form class="px-4" th:action="@{/saveDevice}" th:object="${newOrEditDevice}" method="post">
                 <input type="hidden" th:field="*{idDevice}"/>
                 <div class="form-group row">
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group form-label-cent">
-                            <label for="idCity" class="form-label">Model urządzenia</label>
-                            <select class="form-select" id="idCity" th:field="*{city.idCity}" required>
+                            <label for="idDeviceModel" class="form-label">Model urządzenia</label>
+                            <select class="form-select" id="idDeviceModel" th:field="*{deviceModel.idDeviceModel}" required>
                                 <option value=""></option>
-                                <option th:each="city : ${cityList}" th:value="${city.idCity}"
-                                        th:text="${city.cityName}"></option>
+                                <option th:each="deviceModel : ${deviceModelList}" th:value="${deviceModel.idDeviceModel}"
+                                        th:text="${deviceModel.deviceModelName}"></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <label for="deviceSerialNo" class="form-label ">Numer seryny</label>
-                        <input type="text" class="form-control" id="deviceSerialNo" name="deviceSerialNo"
-                               th:field="*{deviceSerialNo}" placeholder="Numer seryjny" required>
+                    <div class="col-md-4 ">
+                        <div class="form-group form-label-cent">
+                            <label for="idWeightClass" class="form-label">Klasa ważenia</label>
+                            <select class="form-select" id="idWeightClass" th:field="*{weightClass.idWeightClass}" required>
+                                <option value=""></option>
+                                <option th:each="weightClass: ${weightClassList}" th:value="${weightClass.idWeightClass}"
+                                        th:text="${weightClass.weightClassName}"></option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-3 ">
-
-
+                    <div class="col-md-4 ">
+                        <div class="form-group form-label-cent">
+                            <label for="idStore" class="form-label">Sklep</label>
+                            <select class="form-select" id="idStore" th:field="*{store.idStore}" required>
+                                <option value=""></option>
+                                <option th:each="store : ${storeList}" th:value="${store.idStore}"
+                                        th:text="${store.storeName}"></option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="text-center">
+
+                <div class="form-group row mt-4">
+                    <div class="col-md-4">
+                        <label for="deviceSerialNo" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceSerialNo" name="deviceSerialNo"
+                               th:field="*{deviceSerialNo}" placeholder="deviceSerialNo" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="deviceDateLegalization" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceDateLegalization" name="deviceDateLegalization"
+                               th:field="*{deviceDateLegalization}" placeholder="deviceDateLegalization" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="deviceDateNextLegalization" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceDateNextLegalization" name="deviceDateNextLegalization"
+                               th:field="*{deviceDateNextLegalization}" placeholder="deviceDateNextLegalization" required>
+                    </div>
+                </div>
+                <div class="form-group row mt-4">
+                    <div class="col-md-3">
+                        <label for="deviceRangeWeightMax" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceRangeWeightMax" name="deviceRangeWeightMax"
+                               th:field="*{deviceRangeWeightMax}" placeholder="XXX" deviceRangeWeightMax>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="deviceRangeWeightMin" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceRangeWeightMin" name="deviceRangeWeightMin"
+                               th:field="*{deviceRangeWeightMin}" placeholder="deviceRangeWeightMin" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="deviceValueLegalizationPlotE" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceValueLegalizationPlotE" name="deviceValueLegalizationPlotE"
+                               th:field="*{deviceValueLegalizationPlotE}" placeholder="deviceValueLegalizationPlotE" required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="deviceValuePlotReadingD" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceValuePlotReadingD" name="deviceValuePlotReadingD"
+                               th:field="*{deviceValuePlotReadingD}" placeholder="deviceValuePlotReadingD" required>
+                    </div>
+                </div>
+                <div class="form-group row mt-4">
+                    <div class="col-md-4">
+                        <label for="deviceBorderRangeTare" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceBorderRangeTare" name="deviceBorderRangeTare"
+                               th:field="*{deviceBorderRangeTare}" placeholder="deviceBorderRangeTare" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="deviceConformity" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceConformity" name="deviceConformity"
+                               th:field="*{deviceConformity}" placeholder="deviceConformity" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="deviceDescryption" class="form-label ">Nazwa ulicy</label>
+                        <input type="text" class="form-control" id="deviceDescryption" name="deviceDescryption"
+                               th:field="*{deviceDescryption}" placeholder="deviceDescryption" required>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="X" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
                 </div>
-
-
             </form>
         </div>
     </main>

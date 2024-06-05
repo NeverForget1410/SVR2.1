@@ -51,6 +51,8 @@ public class LocationsController {
         model.addAttribute("cityList", cityService.getAllCity());
         return "locations/addressForm.html";
     }
+
+
     @PostMapping("/saveAddress")
     public String saveAddress(@ModelAttribute("newAddress") Address newAddress, Principal principal, RedirectAttributes redirectAttributes) {
         if (newAddress.getIdAddress() == null) {

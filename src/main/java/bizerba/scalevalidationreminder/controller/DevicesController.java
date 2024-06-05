@@ -3,8 +3,8 @@ package bizerba.scalevalidationreminder.controller;
 import bizerba.scalevalidationreminder.model.Devices;
 import bizerba.scalevalidationreminder.repository.ManufacturerRepository;
 import bizerba.scalevalidationreminder.repository.UserRepository;
-import bizerba.scalevalidationreminder.service.DevicesService;
-import bizerba.scalevalidationreminder.service.ManufacturerService;
+import bizerba.scalevalidationreminder.repository.WeightClassRepository;
+import bizerba.scalevalidationreminder.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +29,13 @@ public class DevicesController {
     public UserRepository userRepository;
 
     @Autowired
-    public ManufacturerService manufacturerService;
+    public WeighClassService weighClassService;
+
+    @Autowired
+    public DeviceModelService deviceModelService;
+
+    @Autowired
+    public StoreService storeService;
 
     @GetMapping("/deviceList")
     public String getAllDevicesForUser(Model model,
@@ -68,9 +74,15 @@ public class DevicesController {
             devices = new Devices();
         }
         model.addAttribute("newOrEditDevice", devices);
-        model.addAttribute("manufacturerList", manufacturerService.getAllManufacturers());
+        model.addAttribute("weightClassList", weighClassService.getAllWeightClasses());
+        model.addAttribute("deviceModelList", deviceModelService.getAllDeviceModels());
+        model.addAttribute("storeList", storeService.getAllStores());
         return "devices/devicesForm.html";
     }
+
+
+
+
     @PostMapping("/saveDevice")
     public String saveDevices(@ModelAttribute("newOrEditDevice") Devices newOrEditDevice, Principal principal, RedirectAttributes redirectAttributes) {
         if (newOrEditDevice.getIdDevice() == null) {
