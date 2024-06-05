@@ -6,6 +6,7 @@ $(document).on("click", ".open-modal", function () {
         type: "GET",
         url: `/api/devices/deviceDetails/${idDevice}`,
         success: function (data) {
+            console.log("Dane pobrane z serwera:", data);
             // Ustawia dane o sklepie w modalu
             $("#deviceRangeWeightMax").text(data.deviceRangeWeightMin);
             $("#deviceRangeWeightMin").text(data.deviceRangeWeightMax);
