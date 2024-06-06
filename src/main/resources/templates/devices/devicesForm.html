@@ -13,8 +13,9 @@
             </ol>
             <form class="px-4" th:action="@{/saveDevice}" th:object="${newOrEditDevice}" method="post">
                 <input type="hidden" th:field="*{idDevice}"/>
+
                 <div class="form-group row">
-                    <div class="col-md-4 ">
+                    <div class="col-md-3 ">
                         <div class="form-group form-label-cent">
                             <label for="idDeviceModel" class="form-label">Model urządzenia</label>
                             <select class="form-select" id="idDeviceModel" th:field="*{deviceModel.idDeviceModel}" required>
@@ -24,86 +25,82 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4 ">
-                        <div class="form-group form-label-cent">
-                            <label for="idWeightClass" class="form-label">Klasa ważenia</label>
-                            <select class="form-select" id="idWeightClass" th:field="*{weightClass.idWeightClass}" required>
-                                <option value=""></option>
-                                <option th:each="weightClass: ${weightClassList}" th:value="${weightClass.idWeightClass}"
-                                        th:text="${weightClass.weightClassName}"></option>
-                            </select>
-                        </div>
+                    <div class="col-md-3">
+                        <label for="deviceSerialNo" class="form-label ">Numer Seryjny</label>
+                        <input type="text" class="form-control" id="deviceSerialNo" name="deviceSerialNo"
+                               th:field="*{deviceSerialNo}" placeholder="Wprowadź numer seryjny" required>
                     </div>
-                    <div class="col-md-4 ">
-                        <div class="form-group form-label-cent">
-                            <label for="idStore" class="form-label">Sklep</label>
-                            <select class="form-select" id="idStore" th:field="*{store.idStore}" required>
-                                <option value=""></option>
-                                <option th:each="store : ${storeList}" th:value="${store.idStore}"
-                                        th:text="${store.storeName}"></option>
-                            </select>
-                        </div>
+                    <div class="col-md-3">
+                        <label for="idStore" class="form-label">Lokalizacja</label>
+                        <select class="form-select" id="idStore" th:field="*{store.idStore}" required>
+                            <option value=""></option>
+                            <option th:each="store : ${storeList}" th:value="${store.idStore}"
+                                    th:text="${store.storeName}+' '+${store.storeNo}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="idWeightClass" class="form-label">Klasa ważenia</label>
+                        <select class="form-select" id="idWeightClass" th:field="*{weightClass.idWeightClass}" required>
+                            <option value=""></option>
+                            <option th:each="weightClass: ${weightClassList}" th:value="${weightClass.idWeightClass}"
+                                    th:text="${weightClass.weightClassName}"></option>
+                        </select>
                     </div>
                 </div>
-
-                <div class="form-group row mt-4">
+                <div class="form-group row mt-5">
                     <div class="col-md-4">
-                        <label for="deviceSerialNo" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceSerialNo" name="deviceSerialNo"
-                               th:field="*{deviceSerialNo}" placeholder="deviceSerialNo" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="deviceDateLegalization" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceDateLegalization" name="deviceDateLegalization"
+                        <label for="deviceDateLegalization" class="form-label ">Data legalizacji</label>
+                        <input type="date" class="form-control" id="deviceDateLegalization" name="deviceDateLegalization"
                                th:field="*{deviceDateLegalization}" placeholder="deviceDateLegalization" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="deviceDateNextLegalization" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceDateNextLegalization" name="deviceDateNextLegalization"
+                        <label for="deviceDateNextLegalization" class="form-label ">Data następnej legalizacji</label>
+                        <input type="date" class="form-control" id="deviceDateNextLegalization" name="deviceDateNextLegalization"
                                th:field="*{deviceDateNextLegalization}" placeholder="deviceDateNextLegalization" required>
                     </div>
-                </div>
-                <div class="form-group row mt-4">
-                    <div class="col-md-3">
-                        <label for="deviceRangeWeightMax" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceRangeWeightMax" name="deviceRangeWeightMax"
-                               th:field="*{deviceRangeWeightMax}" placeholder="XXX" deviceRangeWeightMax>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="deviceRangeWeightMin" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceRangeWeightMin" name="deviceRangeWeightMin"
-                               th:field="*{deviceRangeWeightMin}" placeholder="deviceRangeWeightMin" required>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="deviceValueLegalizationPlotE" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceValueLegalizationPlotE" name="deviceValueLegalizationPlotE"
-                               th:field="*{deviceValueLegalizationPlotE}" placeholder="deviceValueLegalizationPlotE" required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="deviceValuePlotReadingD" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceValuePlotReadingD" name="deviceValuePlotReadingD"
-                               th:field="*{deviceValuePlotReadingD}" placeholder="deviceValuePlotReadingD" required>
-                    </div>
-                </div>
-                <div class="form-group row mt-4">
                     <div class="col-md-4">
-                        <label for="deviceBorderRangeTare" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceBorderRangeTare" name="deviceBorderRangeTare"
-                               th:field="*{deviceBorderRangeTare}" placeholder="deviceBorderRangeTare" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="deviceConformity" class="form-label ">Nazwa ulicy</label>
+                        <label for="deviceConformity" class="form-label ">Numer dopuszczenia</label>
                         <input type="text" class="form-control" id="deviceConformity" name="deviceConformity"
-                               th:field="*{deviceConformity}" placeholder="deviceConformity" required>
+                               th:field="*{deviceConformity}" placeholder="DE-17-PC-PTB002" required>
                     </div>
-                    <div class="col-md-4">
-                        <label for="deviceDescryption" class="form-label ">Nazwa ulicy</label>
-                        <input type="text" class="form-control" id="deviceDescryption" name="deviceDescryption"
-                               th:field="*{deviceDescryption}" placeholder="deviceDescryption" required>
-                    </div>
+
                 </div>
 
+                <div class="form-group row mt-5">
+                    <div class="col-md-3">
+                        <label for="deviceRangeWeightMax" class="form-label ">Maksymalny zakres ważenia</label>
+                        <input type="text" class="form-control" id="deviceRangeWeightMax" name="deviceRangeWeightMax"
+                               th:field="*{deviceRangeWeightMax}" placeholder="6/15 kg" deviceRangeWeightMax>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="deviceRangeWeightMin" class="form-label ">Milimalny zakres ważenia</label>
+                        <input type="text" class="form-control" id="deviceRangeWeightMin" name="deviceRangeWeightMin"
+                               th:field="*{deviceRangeWeightMin}" placeholder="40 g" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="deviceValueLegalizationPlotE" class="form-label ">Wartość działki legalizacyjnej E</label>
+                        <input type="text" class="form-control" id="deviceValueLegalizationPlotE" name="deviceValueLegalizationPlotE"
+                               th:field="*{deviceValueLegalizationPlotE}" placeholder="2/5g" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="deviceValuePlotReadingD" class="form-label ">Działka odczytowa</label>
+                        <input type="text" class="form-control" id="deviceValuePlotReadingD" name="deviceValuePlotReadingD"
+                               th:field="*{deviceValuePlotReadingD}" placeholder="2/5g" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="deviceBorderRangeTare" class="form-label ">Największa tara ujemna</label>
+                        <input type="text" class="form-control" id="deviceBorderRangeTare" name="deviceBorderRangeTare"
+                               th:field="*{deviceBorderRangeTare}" placeholder="-6/15kg" required>
+                    </div>
+
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="form-outline w-50 mb-4">
+                        <label class="form-label" for="deviceDescryption">Opis urządzenia</label>
+                        <textarea class="form-control" id="deviceDescryption" rows="4"
+                                  th:field="*{deviceDescryption}" placeholder="Opis urządzenia"></textarea>
+                    </div>
+                </div>
                 <div class="text-center mt-4">
                     <a href="X" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
@@ -111,6 +108,22 @@
             </form>
         </div>
     </main>
+    <script>
+        $(document).ready(function () {
+            $('#idStore').select2({
+                placeholder: "Wybierz lokalizacje",
+                allowClear: true,
+                theme: 'bootstrap-5'
+            });
+        });
+        $(document).ready(function () {
+            $('#idDeviceModel').select2({
+                placeholder: "Wybierz lokalizacje",
+                allowClear: true,
+                theme: 'bootstrap-5'
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
