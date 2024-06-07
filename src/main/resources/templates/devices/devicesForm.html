@@ -11,6 +11,12 @@
                     th:text="${newOrEditDevice.idDevice} != null ? 'Edytuj urządzenie' : 'Nowe urządzenie'">
                 </li>
             </ol>
+            <div class="alert alert-danger" role="alert" id="verificationAlert" style="display: none;">
+                Proszę zweryfikować poprawność następnej daty legalizacji.
+                Powiadomienie zniknie za <span id="countdown">10</span> sekund.
+            </div>
+
+
             <form class="px-4" th:action="@{/saveDevice}" th:object="${newOrEditDevice}" method="post">
                 <input type="hidden" th:field="*{idDevice}"/>
 
@@ -58,6 +64,7 @@
                         <input type="date" class="form-control" id="deviceDateNextLegalization" name="deviceDateNextLegalization"
                                th:field="*{deviceDateNextLegalization}" placeholder="deviceDateNextLegalization" required>
                     </div>
+
                     <div class="col-md-4">
                         <label for="deviceConformity" class="form-label ">Numer dopuszczenia</label>
                         <input type="text" class="form-control" id="deviceConformity" name="deviceConformity"
@@ -102,7 +109,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="X" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
+                    <a href="/api/devices/deviceList" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
                 </div>
             </form>
@@ -121,6 +128,30 @@
                 placeholder: "Wybierz lokalizacje",
                 allowClear: true,
                 theme: 'bootstrap-5'
+            });
+        });
+        $(document).ready(function (){
+            $('#deviceDateLegalization').on('change', function (){
+                var legalDate = $(this).val();
+                if (legalDate){
+                    var legalDateObj = new Date(legalDate);
+                    legalDateObj.setFullYear(legalDateObj.getFullYear()+2);
+                    var nextLegalDate = legalDateObj.toISOString().slice(0,10);
+                    $('#deviceDateNextLegalization').val(nextLegalDate);
+                    $('#verificationAlert').show();
+                    var countdown = 10;
+                    $('#countdown').text(countdown);
+                    var interval = setInterval(function() {
+                        countdown--;
+                        $('#countdown').text(countdown);
+                        if (countdown <= 0) {
+                            clearInterval(interval);
+                            $('#verificationAlert').hide();
+                        }
+                    }, 1000);
+                } else {
+                    $('#verificationAlert').hide();
+                }
             });
         });
     </script>
