@@ -31,7 +31,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div><i class="fas fa-table me-1"></i>Adresów</div>
                     <div class="d-flex align-items-center">
-                        <a th:href="@{/api/devices/newOrEditDeviceModel}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Adres</a>
+                        <a th:href="@{/api/devices/deviceModelList/newOrEditDeviceModel}" class="btn btn-outline-dark me-2" id="addDeviceModel"><i class="fa-solid fa-plus"></i> Model</a>
                         <div th:if="${totalRecordsDeviceModel >10}" class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,8 +69,8 @@
                             <td th:text="${allDeviceModelList.deviceModelName}"></td>
                             <td th:text="${allDeviceModelList.deviceDescryption}"></td>
                             <td class="function_buttons">
-                                <a th:href="@{zmiana}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
-                                <a th:href="@{zmiana}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                <a th:href="@{/api/devices/deviceModelList/newOrEditDeviceModel(idDeviceModel=${allDeviceModelList.idDeviceModel})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
+                                <a th:href="@{/api/devices/deleteDeviceModel/{idDeviceModel}(idDeviceModel=${allDeviceModelList.idDeviceModel})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
 
                             </td>
                         </tr>

@@ -81,8 +81,6 @@ public class DevicesController {
     }
 
 
-
-
     @PostMapping("/saveDevice")
     public String saveDevices(@ModelAttribute("newOrEditDevice") Devices newOrEditDevice, Principal principal, RedirectAttributes redirectAttributes) {
         if (newOrEditDevice.getIdDevice() == null) {
@@ -92,7 +90,7 @@ public class DevicesController {
             devicesService.saveDevice(newOrEditDevice, principal);
             redirectAttributes.addFlashAttribute("successMessage", "Miasto zostało pomyślnie zaktualizowane.");
         }
-        return "redirect:/devices";
+        return "redirect:/api/devices/deviceList";
     }
 
 
@@ -101,7 +99,7 @@ public class DevicesController {
     public String deleteDevice(@PathVariable(value = "idDevice") Integer idDevice, Principal principal, RedirectAttributes redirectAttributes) {
         this.devicesService.deleteDeviceById(idDevice);
         redirectAttributes.addFlashAttribute("deleteMessage", "Urządzenie o ID: " + idDevice +  " zostało pomyślnie usunięte.");
-        return "redirect:/devices";
+        return "redirect:/api/devices/deviceList";
     }
 
 

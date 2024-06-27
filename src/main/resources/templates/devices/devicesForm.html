@@ -17,7 +17,7 @@
             </div>
 
 
-            <form class="px-4" th:action="@{/saveDevice}" th:object="${newOrEditDevice}" method="post">
+            <form class="px-4" th:action="@{/api/devices/saveDevice}" th:object="${newOrEditDevice}" method="post">
                 <input type="hidden" th:field="*{idDevice}"/>
 
                 <div class="form-group row">
@@ -49,7 +49,7 @@
                         <select class="form-select" id="idWeightClass" th:field="*{weightClass.idWeightClass}" required>
                             <option value=""></option>
                             <option th:each="weightClass: ${weightClassList}" th:value="${weightClass.idWeightClass}"
-                                    th:text="${weightClass.weightClassName}"></option>
+                                    th:text="${weightClass.weightClassName}+' '+${weightClass.weightClassDescryption}"></option>
                         </select>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                     <div class="col-md-4">
                         <label for="deviceDateLegalization" class="form-label ">Data legalizacji</label>
                         <input type="date" class="form-control" id="deviceDateLegalization" name="deviceDateLegalization"
-                               th:field="*{deviceDateLegalization}" placeholder="deviceDateLegalization" required>
+                               th:field="*{deviceDateLegalization}" placeholder="deviceDateLegalization">
                     </div>
                     <div class="col-md-4">
                         <label for="deviceDateNextLegalization" class="form-label ">Data następnej legalizacji</label>
@@ -125,7 +125,7 @@
         });
         $(document).ready(function () {
             $('#idDeviceModel').select2({
-                placeholder: "Wybierz lokalizacje",
+                placeholder: "Wybierz model urządzenia",
                 allowClear: true,
                 theme: 'bootstrap-5'
             });

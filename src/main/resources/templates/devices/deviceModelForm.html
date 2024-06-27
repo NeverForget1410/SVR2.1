@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
 <body>
+<div layout:fragment="content">
+    <main>
+        <div class="container-fluid px-4">
+            <ol class="breadcrumb mb-4 mt-4">
+                <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+                <li class="breadcrumb-item active"><a href="/api/devices/deviceModelList">Lista modeli</a></li>
+                <li class="breadcrumb-item active"
+                    th:text="${newOrEditDeviceModel.idDeviceModel} != null ? 'Edytuj Model' : 'Nowy Model'"></li>
+            </ol>
+            <form class="px-4" th:action="@{/api/devices/saveDeviceModel}" th:object="${newOrEditDeviceModel}" method="post">
+                <input type="hidden" th:field="*{idDeviceModel}"/>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-4 ">
+                        <div class="form-group form-label-cent">
+                            <label for="idManufacturer" class="form-label">Producent</label>
+                            <select class="form-select" id="idManufacturer" th:field="*{manufacturer.idManufacturer}" required>
+                                <option value=""></option>
+                                <option th:each="manufacturerList : ${manufacturerList}" th:value="${manufacturerList.idManufacturer}"
+                                        th:text="${manufacturerList.manufacturerName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="deviceModelName" class="form-label ">Nazwa modelu</label>
+                        <input type="text" class="form-control" id="deviceModelName" name="deviceModelName"
+                               th:field="*{deviceModelName}" placeholder="Nazwa modelu" required>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="form-outline w-50 mb-4">
+                        <label class="form-label" for="deviceDescryption">Opis modelu</label>
+                        <textarea class="form-control" id="deviceDescryption" rows="4"
+                                  th:field="*{deviceDescryption}" placeholder="Opis modelu"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="/api/devices/deviceModelList" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Powrót</a>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script>
+        $(document).ready(function () {
+            $('#idManufacturer').select2({
+                placeholder: "Wybierz producenta",
+                allowClear: true,
+                theme: 'bootstrap-5'
+            });
+        });
+    </script>
 
+</div>
 </body>
 </html>
