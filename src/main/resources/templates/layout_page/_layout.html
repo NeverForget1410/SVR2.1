@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -122,8 +122,12 @@
                     <div class="nav-link" href="#">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-person"></i></div> Klięci
                     </div>
-                    <div class="sb-sidenav-menu-heading">Administration</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+
+
+
+<!--                    ADMINISTRACJA-->
+                    <div sec:authorize="hasRole('ADMIN')" class="sb-sidenav-menu-heading">Administration</div>
+                    <a sec:authorize="hasRole('ADMIN')" class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                        data-bs-target="#collapseAdministration" aria-expanded="false"
                        aria-controls="collapseManufacturer">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user-tie"></i></div>

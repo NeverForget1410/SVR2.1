@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -27,6 +28,11 @@ public class AddressServiceImpl implements AddressService{
     @Override
     public Page<Address> getAllAddressPaginated(Pageable pageable) {
         return addressRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Address> getAllAddress() {
+        return addressRepository.findAll();
     }
 
     @Override

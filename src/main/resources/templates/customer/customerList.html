@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
+<body>
+<div layout:fragment="content">
+    <main>
+
+        <div class="container-fluid px-4">
+            <ol class="breadcrumb mb-4 mt-4">
+                <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+                <li class="breadcrumb-item active">zmiana</li>
+            </ol>
+            <!--                ALERTY-->
+            <div>
+                <div th:if="${successMessage}" class="alert alert-success auto-dismiss" role="alert">
+                    <span th:text="${successMessage}"></span>
+                </div>
+                <div th:if="${deleteMessage}" class="alert alert-danger auto-dismiss" role="alert">
+                    <span th:text="${deleteMessage}"></span>
+                </div>
+            </div>
+            <!--                Brak danych do wyświetlenia-->
+            <div th:if="${totalRecordsCustomer < 1}" class="alert alert-danger d-flex align-items-center"
+                 role="alert">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>
+                    Brak przypisanych adresów
+                </div>
+            </div>
+            <!--                Nagłówek tabeli-->
+            <div th:if="${totalRecordsCustomer >= 1}" class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div><i class="fas fa-table me-1"></i>Adresów</div>
+                    <div class="d-flex align-items-center">
+                        <a th:href="@{/api/customer/customerList/newOrEditCustomer}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Klient</a>
+                        <div th:if="${totalRecordsCustomer > 10}" class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-list"></i> <span
+                                    th:text="${currentSizeCustomer}">Liczba rekordów</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" th:href="@{/api/customer/customerList(pageSize=10, pageNo=0)}">10</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/api/customer/customerList(pageSize=20, pageNo=0)}">20</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/api/customer/customerList(pageSize=50, pageNo=0)}">50</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/api/customer/customerList(pageSize=100, pageNo=0)}">100</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--                Tabela-->
+                <div class="table-responsive text-center">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Lp.</th>
+                            <th>Nazwa klienta</th>
+                            <th>Opis</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="customerList : ${allCustomerList}">
+                            <td class="id_list align-middle" th:text="${customerList.idCustomer}"></td>
+                            <td th:text="${customerList.customerName}"></td>
+                            <td th:text="${customerList.customerDescryption}"></td>
+                            <td class="function_buttons">
+                                <a th:href="@{/api/customer/customerList/newOrEditCustomer(idCustomer=${customerList.idCustomer})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
+                                <a th:href="@{/api/customer/deleteCustomer/{idCustomer}(icCustomer=${customerList.idCustomer})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--Przyciski nawigacyjne-->
+                <div th:if="${totalRecordsCustomer>10}"
+                     class="d-flex justify-content-between align-items-center mb-3">
+                    <nav aria-label="Navigation" class="flex-grow-1">
+                        <ul class="pagination justify-content-center mt-1">
+                            <li class="page-item" th:classappend="${currentPageCustomer == 0} ? 'disabled' : ''">
+                                <a class="page-link" th:href="@{customerList(page=0, size=${currentSize})}"
+                                   aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${currentPageCustomer == 0} ? 'disabled' : ''">
+                                <a class="page-link"
+                                   th:href="@{customerList(pageNo=${currentPageCustomer - 1}, pageSize=${currentSizeCustomer})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesCustomer - 1)}"
+                                th:classappend="${i == currentPageCustomer} ? 'active' : ''">
+                                <a class="page-link"
+                                   th:href="@{customerList(pageNo=${i}, pageSize=${currentSizeCustomer})}"
+                                   th:text="${i + 1}"></a>
+                            </li>
+                            <li class="page-item"
+                                th:classappend="${currentPageCustomer + 1 >= totalPagesCustomer} ? 'disabled' : ''">
+                                <a class="page-link"
+                                   th:href="@{customerList(pageNo=${currentPageCustomer + 1}, pageSize=${currentSizeCustomer"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"
+                                th:classappend="${currentPageCustomer + 1 >= totalPagesCustomer} ? 'disabled' : ''">
+                                <a class="page-link"
+                                   th:href="@{customerList(pageNo=${totalPagesCustomer - 1}, pageSize=${currentSizeCustomer})}"
+                                   aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="me-3">
+                            <span class="text-muted">Łącznie rekordów: <span
+                                    th:text="${totalRecordsAddress}">0</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

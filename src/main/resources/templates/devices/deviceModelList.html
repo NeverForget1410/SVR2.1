@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 <div layout:fragment="content">
     <main>
@@ -9,7 +9,7 @@
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
                 <li class="breadcrumb-item active">Modele urządzeń</li>
             </ol>
-            <!--                ALERTY-->
+            <!--ALERTY-->
             <div>
                 <div th:if="${successMessage}" class="alert alert-success auto-dismiss" role="alert">
                     <span th:text="${successMessage}"></span>
@@ -18,21 +18,22 @@
                     <span th:text="${deleteMessage}"></span>
                 </div>
             </div>
-            <!--                Brak danych do wyświetlenia-->
+            <!--Brak danych do wyświetlenia-->
             <div th:if="${totalRecordsDeviceModel < 1}" class="alert alert-danger d-flex align-items-center"
                  role="alert">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div>
-                    Brak przypisanych adresów
+                    W bazie danych nie występują żadne modele
                 </div>
+                <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
             <!--                Nagłówek tabeli-->
-            <div th:if="${totalRecordsDeviceModel > 1}" class="card mb-4">
+            <div th:if="${totalRecordsDeviceModel >= 1}" class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <div><i class="fas fa-table me-1"></i>Adresów</div>
+                    <div><i class="fas fa-table me-1"></i>Model</div>
                     <div class="d-flex align-items-center">
-                        <a th:href="@{/api/devices/deviceModelList/newOrEditDeviceModel}" class="btn btn-outline-dark me-2" id="addDeviceModel"><i class="fa-solid fa-plus"></i> Model</a>
-                        <div th:if="${totalRecordsDeviceModel >10}" class="dropdown">
+                        <a sec:authorize="hasRole('ADMIN') or hasRole('DISPATCHER')"  th:href="@{/api/devices/deviceModelList/newOrEditDeviceModel}" class="btn btn-outline-dark me-2" id="addDeviceModel"><i class="fa-solid fa-plus"></i> Model</a>
+                        <div th:if="${totalRecordsDeviceModel >= 10}" class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-list"></i> <span
@@ -51,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <!--                Tabela-->
+                <!--Tabela-->
                 <div class="table-responsive text-center">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
@@ -70,7 +71,7 @@
                             <td th:text="${allDeviceModelList.deviceDescryption}"></td>
                             <td class="function_buttons">
                                 <a th:href="@{/api/devices/deviceModelList/newOrEditDeviceModel(idDeviceModel=${allDeviceModelList.idDeviceModel})}" class="btn btn-outline-info"><i class="fas fa-sync"></i></a>
-                                <a th:href="@{/api/devices/deleteDeviceModel/{idDeviceModel}(idDeviceModel=${allDeviceModelList.idDeviceModel})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/api/devices/deleteDeviceModel/{idDeviceModel}(idDeviceModel=${allDeviceModelList.idDeviceModel})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
 
                             </td>
                         </tr>
@@ -83,14 +84,14 @@
                     <nav aria-label="Navigation" class="flex-grow-1">
                         <ul class="pagination justify-content-center mt-1">
                             <li class="page-item" th:classappend="${currentPageDeviceModel == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{/deviceModelList(page=0, size=${currentSize})}"
+                                <a class="page-link" th:href="@{deviceModelList(page=0, size=${currentSize})}"
                                    aria-label="First">
                                     <span aria-hidden="true">&laquo;&laquo;</span>
                                 </a>
                             </li>
                             <li class="page-item" th:classappend="${currentPageDeviceModel == 0} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{/deviceModelList(pageNo=${currentPageDeviceModel - 1}, pageSize=${currentSizeDeviceModel})}"
+                                   th:href="@{deviceModelList(pageNo=${currentPageDeviceModel - 1}, pageSize=${currentSizeDeviceModel})}"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -98,13 +99,13 @@
                             <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesDeviceModel - 1)}"
                                 th:classappend="${i == currentPageDeviceModel} ? 'active' : ''">
                                 <a class="page-link"
-                                   th:href="@{/deviceModelList(pageNo=${i}, pageSize=${currentSizeDeviceModel})}"
+                                   th:href="@{deviceModelList(pageNo=${i}, pageSize=${currentSizeDeviceModel})}"
                                    th:text="${i + 1}"></a>
                             </li>
                             <li class="page-item"
                                 th:classappend="${currentPageDeviceModel + 1 >= totalPagesDeviceModel} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{/deviceModelList(pageNo=${currentPageDeviceModel + 1}, pageSize=${currentSizeDeviceModel})}"
+                                   th:href="@{deviceModelList(pageNo=${currentPageDeviceModel + 1}, pageSize=${currentSizeDeviceModel})}"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -112,7 +113,7 @@
                             <li class="page-item"
                                 th:classappend="${currentPageDeviceModel + 1 >= totalPagesDeviceModel} ? 'disabled' : ''">
                                 <a class="page-link"
-                                   th:href="@{/deviceModelList(pageNo=${totalPagesDeviceModel - 1}, pageSize=${currentSizeDeviceModel})}"
+                                   th:href="@{deviceModelList(pageNo=${totalPagesDeviceModel - 1}, pageSize=${currentSizeDeviceModel})}"
                                    aria-label="Last">
                                     <span aria-hidden="true">&raquo;&raquo;</span>
                                 </a>
@@ -124,9 +125,13 @@
                                     th:text="${totalRecordsDeviceModel}">0</span></span>
                     </div>
                 </div>
-            </div>
+                <div th:if="${totalRecordsDeviceModel <= 10}" class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="ms-auto me-3">
+                            <span class="text-muted">Łącznie rekordów: <span th:text="${totalRecordsDeviceModel}">0</span></span>
+                    </div>
+                </div>
         </div>
-
+        </div>
     </main>
 </div>
 </body>

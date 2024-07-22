@@ -92,13 +92,14 @@
                                         <span aria-hidden="true">&laquo;&laquo;</span>
                                     </a>
                                 </li>
-                                <li class="page-item" th:classappend="${currentPageAddreess == 0} ? 'disabled' : ''">
+                                <li class="page-item" th:classappend="${currentPageAddress == 0} ? 'disabled' : ''">
                                     <a class="page-link"
                                        th:href="@{addressList(pageNo=${currentPageAddress - 1}, pageSize=${currentSizeAddress})}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
+
                                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPagesAddress - 1)}"
                                     th:classappend="${i == currentPageAddress} ? 'active' : ''">
                                     <a class="page-link"

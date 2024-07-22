@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface DevicesRepository extends JpaRepository<Devices,Integer> {
 
 
-    @Query("SELECT d FROM Devices d WHERE d.store in (SELECT uhs.store FROM UserHasStore uhs WHERE uhs.user.idUser = :idUser)")
+    @Query("SELECT d FROM Devices d WHERE d.store in (SELECT uhs.store FROM UserHasStore uhs WHERE uhs.user.idUser = :idUser GROUP BY uhs.store.storeNo)")
     Page<Devices> getAllDevicesForUser(Pageable pageable, @Param("idUser") Integer idUser);
 
 }
