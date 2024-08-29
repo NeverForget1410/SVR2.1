@@ -1,0 +1,77 @@
+<!--Przycisk otwarcia formularza dodawania rekordu-->
+<div th:fragment="addOrEditButtonTemplate(url, buttonText)"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <a sec:authorize="hasRole('ADMIN') or hasRole('DISPATCHER')"
+       th:href="${url}"
+       class="btn btn-outline-dark me-2">
+        <i class="fa-solid fa-plus"></i> <span th:text="${buttonText}">Dodaj</span>
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--Fragment strony lista rozwijalna-->
+<div th:fragment="pageSizeDropdownTemplate(pageSizes, currentSize, basePath)">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-list"></i> <span th:text="${currentSize}">Liczba rekordów</span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li th:each="size : ${pageSizes}">
+                <a class="dropdown-item"
+                   th:href="@{${basePath}(pageSize=${size}, pageNo=0)}"
+                   th:text="${size}">Rozmiar</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div th:fragment="tablePaginationTemplate(currentPage, totalPages, basePath, currentSize)">
+    <nav aria-label="Navigation" class="flex-grow-1">
+        <ul class="pagination justify-content-center mt-1">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{${basePath}(pageNo=0, pageSize=${currentSize})}" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{${basePath}(pageNo=${currentPage - 1}, pageSize=${currentSize})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active' : ''">
+                <a class="page-link" th:href="@{${basePath}(pageNo=${i}, pageSize=${currentSize})}" th:text="${i + 1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{${basePath}(pageNo=${currentPage + 1}, pageSize=${currentSize})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{${basePath}(pageNo=${totalPages - 1}, pageSize=${currentSize})}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

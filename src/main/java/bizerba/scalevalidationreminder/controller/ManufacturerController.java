@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/manufacturer")
@@ -26,11 +28,13 @@ public class ManufacturerController {
                                                @RequestParam(defaultValue = "0") int pageNo,
                                                @RequestParam(defaultValue = "10") int pageSize) {
         Page<Manufacturer> manufacturerPage = manufacturerService.getAllManufacturersPaginated(PageRequest.of(pageNo, pageSize));
+        List<Integer> amountOnPage = Arrays.asList(10, 20, 50, 100, 200);
+        model.addAttribute("amountOnPage", amountOnPage);
         model.addAttribute("allManufacturersList", manufacturerPage.getContent());
-        model.addAttribute("currentPageAddress", pageNo);
-        model.addAttribute("currentSizeAddress", pageSize);
-        model.addAttribute("totalPagesAddress", manufacturerPage.getTotalPages());
-        model.addAttribute("totalRecordsAddress", manufacturerPage.getTotalElements());
+        model.addAttribute("currentPageManufacturer", pageNo);
+        model.addAttribute("currentSizeManufacturer", pageSize);
+        model.addAttribute("totalPagesManufacturer", manufacturerPage.getTotalPages());
+        model.addAttribute("totalRecordsManufacturer", manufacturerPage.getTotalElements());
         return "devices/manufacturerList.html";
     }
 

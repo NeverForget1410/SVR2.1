@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -31,6 +34,8 @@ public class CustomerController {
                                           @RequestParam(defaultValue = "0") int pageNo,
                                           @RequestParam(defaultValue = "10") int pageSize){
         Page<Customer> customerPage = customerService.getAllCustomerPaginated(PageRequest.of(pageNo, pageSize));
+        List<Integer> amountOnPage = Arrays.asList(10, 20, 50, 100, 200);
+        model.addAttribute("amountOnPage", amountOnPage);
         model.addAttribute("allCustomerList", customerPage.getContent());
         model.addAttribute("currentPageCustomer", pageNo);
         model.addAttribute("currentSizeCustomer", pageSize);

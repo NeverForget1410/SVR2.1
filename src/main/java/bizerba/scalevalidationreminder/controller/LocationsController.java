@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/locations")
@@ -31,6 +33,8 @@ public class LocationsController {
                                          @RequestParam(defaultValue = "0") int pageNo,
                                          @RequestParam(defaultValue = "10") int pageSize) {
         Page<Address> addressPage = addressService.getAllAddressPaginated(PageRequest.of(pageNo,pageSize));
+        List<Integer> amountOnPage = Arrays.asList(10, 20, 50, 100, 200);
+        model.addAttribute("amountOnPage", amountOnPage);
         model.addAttribute("allAddressList", addressPage.getContent());
         model.addAttribute("currentPageAddress", pageNo);
         model.addAttribute("currentSizeAddress", pageSize);
@@ -80,6 +84,8 @@ public class LocationsController {
     @GetMapping("/cityList")
     public String getAllCityPagable(Model model, @RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
         Page<City> cityPage = cityService.getAllCityPaginated(PageRequest.of(pageNo, pageSize));
+        List<Integer> amountOnPage = Arrays.asList(10, 20, 50, 100, 200);
+        model.addAttribute("amountOnPage", amountOnPage);
         model.addAttribute("allCityList", cityPage.getContent());
         model.addAttribute("currentPageCity", pageNo);
         model.addAttribute("currentSizeCity", pageSize);

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/_layout.html}">
-
 <body class="d-flex flex-column min-vh-100">
 <div layout:fragment="content">
-
     <main>
         <div class="container-fluid px-4">
             <ol class="breadcrumb mb-4 mt-4">
                 <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Urządzenia</li>
+                <li class="breadcrumb-item active">Urządzenia</li>
             </ol>
+            <!--ALERTY-->
             <div>
                 <div th:if="${successMessage}" class="alert alert-success auto-dismiss" role="alert">
                     <span th:text="${successMessage}"></span>
@@ -18,27 +17,23 @@
                     <span th:text="${deleteMessage}"></span>
                 </div>
             </div>
-            <div th:if="${totalRecords < 1}" class="alert alert-danger d-flex align-items-center" role="alert">
+            <!--Brak danych do wyświetlenia-->
+            <div th:if="${totalRecordsDevices < 1}" class="alert alert-danger d-flex align-items-center" role="alert">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <div>
                     Brak przypisanych urządzeń do użytkownika
                 </div>
             </div>
-            <div th:if="${totalRecords > 1}" class="card mb-4">
+<!--                Nagłówek tabeli-->
+            <div th:if="${totalRecordsDevices >= 1}" class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div><i class="fas fa-table me-1"></i>Urządzenia</div>
                     <div class="d-flex align-items-center">
-                        <a th:href="@{/api/devices/newOrEditDevice}" class="btn btn-outline-dark me-2" id="addDevice"><i class="fa-solid fa-plus"></i> Urządzenie</a>
-                        <div th:if="${totalRecords>10}" class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-list"></i> <span th:text="${currentSize}">Liczba rekordów</span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=10, page=0)}">10</a></li>
-                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=20, page=0)}">20</a></li>
-                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=50, page=0)}">50</a></li>
-                                <li><a class="dropdown-item" th:href="@{/api/devices/deviceList(size=100, page=0)}">100</a></li>
-                            </ul>
+<!--                        Przycisk dodawania urządzenia-->
+                        <div th:replace="~{fragments/displayListFragments :: addOrEditButtonTemplate(@{/api/devices/newOrEditDevice}, 'Urządzenie')}"></div>
+<!--                        Lista rozwijalna z ilością wyświetlanych rekordów-->
+                        <div th:if="${totalRecordsDevices > 10}" class="dropdown">
+                            <div th:replace="~{fragments/displayListFragments :: pageSizeDropdownTemplate(${amountOnPage}, ${currentSizeDevices}, '/api/devices/deviceList')}"></div>
                         </div>
                     </div>
                 </div>
@@ -77,39 +72,18 @@
                     </table>
                 </div>
 
-                <div th:if="${totalRecords>10}" class="d-flex justify-content-between align-items-center mb-3">
-                    <nav aria-label="Navigation" class="flex-grow-1">
-                        <ul class="pagination justify-content-center mt-1">
-                            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{deviceList(page=0, size=${currentSize})}" aria-label="First">
-                                    <span aria-hidden="true">&laquo;&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{deviceList(page=${currentPage - 1}, size=${currentSize})}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active' : ''">
-                                <a class="page-link" th:href="@{deviceList(page=${i}, size=${currentSize})}" th:text="${i + 1}"></a>
-                            </li>
-                            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{deviceList(page=${currentPage + 1}, size=${currentSize})}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:href="@{deviceList(page=${totalPages - 1}, size=${currentSize})}" aria-label="Last">
-                                    <span aria-hidden="true">&raquo;&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                <!--Przyciski nawigacyjne-->
+                <div th:if="${totalRecordsDevices > 10}" class="d-flex justify-content-between align-items-center mb-3">
+                    <div th:insert="~{fragments/displayListFragments :: tablePaginationTemplate(${currentPageDevice}, ${totalPagesDevice}, 'deviceList', ${currentSizeDevices})}" class="flex-grow-1"></div>
                     <div class="me-3">
-                        <span class="text-muted">Łącznie rekordów: <span th:text="${totalRecords}">0</span></span>
+                        <span class="text-muted">Łącznie rekordów: <span th:text="${totalRecordsDevices}">0</span></span>
                     </div>
                 </div>
-
+                <div th:if="${totalRecordsDevices <= 10}" class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="ms-auto me-3">
+                        <span class="text-muted">Łącznie rekordów: <span th:text="${totalRecordsDevices}">0</span></span>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

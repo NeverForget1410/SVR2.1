@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/devices")
@@ -30,6 +32,8 @@ public class DeviceModelController {
                                              @RequestParam(defaultValue = "0")int pageNo,
                                              @RequestParam(defaultValue = "10")int pageSize){
         Page<DeviceModel> deviceModelPage = deviceModelService.getAllDeviceModelPaginated(PageRequest.of(pageNo, pageSize));
+        List<Integer> amountOnPage = Arrays.asList(10, 20, 50, 100, 200);
+        model.addAttribute("amountOnPage", amountOnPage);
         model.addAttribute("allDeviceModelList", deviceModelPage.getContent());
         model.addAttribute("currentPageDeviceModel", pageNo);
         model.addAttribute("currentSizeDeviceModel", pageSize);

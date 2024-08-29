@@ -17,6 +17,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/devices")
@@ -39,16 +41,18 @@ public class DevicesController {
 
     @GetMapping("/deviceList")
     public String getAllDevicesForUser(Model model,
-                                       @RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "10") int size, Principal principal) {
+                                       @RequestParam(defaultValue = "0") int pageNo,
+                                       @RequestParam(defaultValue = "10") int pageSize, Principal principal) {
         String userLogin = principal.getName();
         userRepository.findByUserLogin(userLogin).ifPresentOrElse(user -> {
-            Page<Devices> devicePage = devicesService.getAllDevicesForUser(PageRequest.of(page, size), user.getIdUser());
+            Page<Devices> devicePage = devicesService.getAllDevicesForUser(PageRequest.of(pageNo, pageSize), user.getIdUser());
+            List<Integer> amountOnPage = Arrays.asList(10, 20, 50, 100, 200);
+            model.addAttribute("amountOnPage", amountOnPage);
             model.addAttribute("allDevicesList", devicePage.getContent());
-            model.addAttribute("currentPage", page);
-            model.addAttribute("totalPages", devicePage.getTotalPages());
-            model.addAttribute("currentSize", size);
-            model.addAttribute("totalRecords", devicePage.getTotalElements());
+            model.addAttribute("currentPageDevice", pageNo);
+            model.addAttribute("totalPagesDevice", devicePage.getTotalPages());
+            model.addAttribute("currentSizeDevices", pageSize);
+            model.addAttribute("totalRecordsDevices", devicePage.getTotalElements());
         }, () -> {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika.");
         });
