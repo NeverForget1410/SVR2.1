@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes"/>
+    <meta name="description" content="Aplikacja do zarządzania legalizacjami urządzen wagowych"/>
+    <meta name="author" content="Patryk Figura"/>
+    <title>ScaleValidationReminder</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"/>
+
+    <!-- JQuery -->
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+    <!-- Mask Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script async src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <script async src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+</head>
+
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-1" href="/static">ScaleValidationReminder</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" onsubmit="return false;">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Wyszukaj na stronie" aria-label="Wyszukaj na stronie"
+                   aria-describedby="btnNavbarSearch"/>
+            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item disabled" href="#!">Settings</a></li>
+                <li><a class="dropdown-item disabled" href="#!">Activity Log</a></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Interfejs</div>
+
+                    <!--                            Dropdown lokalizacje-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLocations"
+                       aria-expanded="false" aria-controls="collapseLocations">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        Lokalizacje
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLocations" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/api/locations/cityList">Lista miast</a>
+                            <a class="nav-link" href="/api/locations/addressList">Lista adresów</a>
+                        </nav>
+                    </div>
+                    <!--                            Dropdown urzadzenia-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDevices"
+                       aria-expanded="false" aria-controls="collapseDevices">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-desktop"></i></div>
+                        Urządzenia
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDevices" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/api/devices/deviceList">Lista urządzeń</a>
+                            <a class="nav-link" href="/api/devices/weightClassList">Klasy ważenia</a>
+                        </nav>
+                    </div>
+                    <!--                            Dropdown producneci-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseManufacturer" aria-expanded="false"
+                       aria-controls="collapseManufacturer">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-industry"></i></div>
+                        Producenci
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseManufacturer" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/api/manufacturer/manufacturerList">Lista producentów</a>
+                            <a class="nav-link" href="/api/devices/deviceModelList">Lista modeli</a>
+                        </nav>
+                    </div>
+                    <div class="nav-link" href="#">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-person"></i></div> Klięci
+                    </div>
+
+
+
+<!--                    ADMINISTRACJA-->
+                    <div sec:authorize="hasRole('ADMIN')" class="sb-sidenav-menu-heading">Administration</div>
+                    <a sec:authorize="hasRole('ADMIN')" class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseAdministration" aria-expanded="false"
+                       aria-controls="collapseManufacturer">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-user-tie"></i></div>
+                        Administration
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseAdministration" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/api/administration">Lista użytkowników</a>
+                            <a class="nav-link" href="/api/">Lista ról</a>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="sb-sidenav-footer">
+                <div class="small">Zalogowano jako: <h6 class="mt-2" th:text="${userName}"></h6></div>
+
+                <div class="small">
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+<script src="/js/scripts.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('.form-control');
+        const tableRows = document.querySelectorAll('.table tbody tr');
+
+        searchInput.addEventListener('input', function () {
+            const searchText = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let found = false;
+
+                cells.forEach(cell => {
+                    const text = cell.textContent.toLowerCase();
+                    if (text.includes(searchText)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Dodajemy obsługę czyszczenia pola wyszukiwania
+        searchInput.addEventListener('keyup', function (event) {
+            if (event.keyCode === 27) { // 27 to kod klawisza Esc
+                searchInput.value = ''; // Wyczyść pole wyszukiwania
+                tableRows.forEach(row => {
+                    row.style.display = ''; // Przywróć widoczność wszystkich rekordów
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

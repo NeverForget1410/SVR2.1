@@ -4,22 +4,10 @@
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <a sec:authorize="hasRole('ADMIN') or hasRole('DISPATCHER')"
        th:href="${url}"
-       class="btn btn-outline-dark me-2">
+       class="btn btn-success me-2">
         <i class="fa-solid fa-plus"></i> <span th:text="${buttonText}">Dodaj</span>
     </a>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
