@@ -17,7 +17,9 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <!-- Inne skrypty -->
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="/JS/bootstrap.bundle.js"></script>
@@ -78,7 +80,7 @@
                                 </li>
                             </ul>
                         </li>
-
+     <!--                   Dropdown Klięci-->
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-bs-target="#clients" data-bs-toggle="collapse"
                                aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
@@ -86,7 +88,7 @@
                             </a>
                             <ul id="clients" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Login</a>
+                                    <a href="/api/customer/customerList" class="sidebar-link">Lista klientów</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="#" class="sidebar-link">Register</a>

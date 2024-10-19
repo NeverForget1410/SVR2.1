@@ -59,7 +59,7 @@ public class CustromerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void deleteCustomer(Integer idCustomer) {
+    public void deleteCustomerById(Integer idCustomer) {
         this.customerRepository.deleteById(idCustomer);
     }
 

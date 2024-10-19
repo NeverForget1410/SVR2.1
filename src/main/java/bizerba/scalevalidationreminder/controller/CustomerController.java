@@ -4,16 +4,18 @@ package bizerba.scalevalidationreminder.controller;
 import bizerba.scalevalidationreminder.model.Customer;
 import bizerba.scalevalidationreminder.repository.AddressRepository;
 import bizerba.scalevalidationreminder.service.AddressService;
+import bizerba.scalevalidationreminder.service.CityService;
 import bizerba.scalevalidationreminder.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,8 +28,9 @@ public class CustomerController {
 
     @Autowired
     public AddressService addressService;
+
     @Autowired
-    private AddressRepository addressRepository;
+    public CityService cityService;
 
     @GetMapping("/customerList")
     public String getAllCustomerPaginated(Model model,
@@ -53,9 +56,28 @@ public class CustomerController {
             customer = new Customer();
         }
         model.addAttribute("newOrEditCustomer", customer);
-        model.addAttribute("addressList", addressService.getAllAddress());
+        model.addAttribute("addressListForCustomer", addressService.getAllAddress());
         return "customer/customerForm.html";
     }
 
+   @PostMapping("/saveCustomer")
+    public String saveCustomer(@ModelAttribute("newOrEditCustomer") Customer newOrEditCustomer, Principal principal, RedirectAttributes redirectAttributes){
+        if (newOrEditCustomer.getIdCustomer() == null){
+            customerService.saveCustomer(newOrEditCustomer, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Klient został pomyślnie dodany.");
+        } else {
+            customerService.saveCustomer(newOrEditCustomer, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Klient został pomyślnie zaktualizowany.");
+        }
+        return "redirect:/api/customer/customerList";
+   }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/deleteeCustomer/{idCustomer}")
+    public String deleteCustomerById(@PathVariable(value = "idCustomer") Integer idCustomer, RedirectAttributes redirectAttributes){
+        this.customerService.deleteCustomerById(idCustomer);
+        redirectAttributes.addFlashAttribute("deleteMessage", "klient o numerze " + idCustomer +  " został pomyślnie usunięty.");
+        return "redirect:/api/customer/customerList";
+    }
 }

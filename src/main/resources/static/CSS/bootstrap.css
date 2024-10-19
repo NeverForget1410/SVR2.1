@@ -12055,3 +12055,53 @@ textarea.form-control-lg {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
+
+/* Stylizacja Select2 dla motywu ciemnego */
+[data-bs-theme="dark"] .select2-container .select2-selection--single {
+  background-color: #343a40; /* Kolor tła */
+  border: 1px solid #495057; /* Kolor obramowania */
+  color: #dee2e6; /* Kolor tekstu */
+}
+
+[data-bs-theme="dark"] .select2-container .select2-selection--single .select2-selection__rendered {
+  color: #dee2e6; /* Kolor tekstu wybranego elementu */
+}
+
+[data-bs-theme="dark"] .select2-container .select2-selection--single .select2-selection__arrow {
+  border-color: #495057; /* Kolor strzałki */
+}
+
+[data-bs-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: rgba(222, 226, 230, 0.5); /* Kolor placeholdera */
+}
+
+[data-bs-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__choice {
+  background-color: #495057; /* Kolor tła dla wybranego elementu */
+  color: #dee2e6; /* Kolor tekstu dla wybranego elementu */
+}
+
+/* Styl dla rozwijanego menu */
+[data-bs-theme="dark"] .select2-container .select2-results {
+  background-color: #343a40; /* Kolor tła dla rozwijanego menu */
+  color: #dee2e6; /* Kolor tekstu w rozwijanym menu */
+}
+
+[data-bs-theme="dark"] .select2-container .select2-results .select2-results__option {
+  color: #dee2e6; /* Kolor tekstu opcji */
+}
+
+[data-bs-theme="dark"] .select2-container .select2-results .select2-results__option--highlighted {
+  background-color: #495057; /* Kolor tła dla podświetlonej opcji */
+}
+
+/* Styl dla pola wyszukiwania */
+[data-bs-theme="dark"] .select2-container--default .select2-search--dropdown .select2-search__field {
+  background-color: #495057; /* Kolor tła pola wyszukiwania */
+  color: #dee2e6; /* Kolor tekstu pola wyszukiwania */
+  border: 1px solid #495057; /* Kolor obramowania pola wyszukiwania */
+}
+
+[data-bs-theme="dark"] .select2-container--default .select2-search--dropdown .select2-search__field::placeholder {
+  color: rgba(222, 226, 230, 0.5); /* Kolor placeholdera w polu wyszukiwania */
+}
+

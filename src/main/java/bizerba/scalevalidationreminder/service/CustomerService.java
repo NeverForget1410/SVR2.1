@@ -11,7 +11,7 @@ public interface CustomerService {
     Page<Customer> getAllCustomerPaginated(Pageable pageable);
 
     void saveCustomer(Customer customer, Principal principal);
-    void deleteCustomer(Integer idCustomer);
+    void deleteCustomerById(Integer idCustomer);
 
     Customer getCustomerById(Integer idCustomer);
 
